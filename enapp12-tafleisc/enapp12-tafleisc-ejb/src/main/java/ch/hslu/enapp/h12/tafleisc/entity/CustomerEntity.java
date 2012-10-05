@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
     @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address"),
     @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email")})
-public class Customer implements Serializable {
+public class CustomerEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,16 +67,16 @@ public class Customer implements Serializable {
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerid")
-    private Collection<Purchase> purchaseCollection;
+    private Collection<PurchaseEntity> purchaseCollection;
 
-    public Customer() {
+    public CustomerEntity() {
     }
 
-    public Customer(Integer id) {
+    public CustomerEntity(Integer id) {
         this.id = id;
     }
 
-    public Customer(Integer id, String username, String password, String name, String address, String email) {
+    public CustomerEntity(Integer id, String username, String password, String name, String address, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -134,11 +134,11 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Purchase> getPurchaseCollection() {
+    public Collection<PurchaseEntity> getPurchaseCollection() {
         return purchaseCollection;
     }
 
-    public void setPurchaseCollection(Collection<Purchase> purchaseCollection) {
+    public void setPurchaseCollection(Collection<PurchaseEntity> purchaseCollection) {
         this.purchaseCollection = purchaseCollection;
     }
 
@@ -152,10 +152,10 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
+        if (!(object instanceof CustomerEntity)) {
             return false;
         }
-        Customer other = (Customer) object;
+        CustomerEntity other = (CustomerEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

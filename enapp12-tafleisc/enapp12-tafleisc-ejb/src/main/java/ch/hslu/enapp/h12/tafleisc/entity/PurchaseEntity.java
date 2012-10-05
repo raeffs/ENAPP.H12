@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Purchase.findById", query = "SELECT p FROM Purchase p WHERE p.id = :id"),
     @NamedQuery(name = "Purchase.findByDatetime", query = "SELECT p FROM Purchase p WHERE p.datetime = :datetime"),
     @NamedQuery(name = "Purchase.findByStatus", query = "SELECT p FROM Purchase p WHERE p.status = :status")})
-public class Purchase implements Serializable {
+public class PurchaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,18 +54,18 @@ public class Purchase implements Serializable {
     private String status;
     @JoinColumn(name = "customerid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Customer customerid;
+    private CustomerEntity customerid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseid")
-    private Collection<Purchaseitem> purchaseitemCollection;
+    private Collection<PurchaseitemEntity> purchaseitemCollection;
 
-    public Purchase() {
+    public PurchaseEntity() {
     }
 
-    public Purchase(Integer id) {
+    public PurchaseEntity(Integer id) {
         this.id = id;
     }
 
-    public Purchase(Integer id, Date datetime, String status) {
+    public PurchaseEntity(Integer id, Date datetime, String status) {
         this.id = id;
         this.datetime = datetime;
         this.status = status;
@@ -95,20 +95,20 @@ public class Purchase implements Serializable {
         this.status = status;
     }
 
-    public Customer getCustomerid() {
+    public CustomerEntity getCustomerid() {
         return customerid;
     }
 
-    public void setCustomerid(Customer customerid) {
+    public void setCustomerid(CustomerEntity customerid) {
         this.customerid = customerid;
     }
 
     @XmlTransient
-    public Collection<Purchaseitem> getPurchaseitemCollection() {
+    public Collection<PurchaseitemEntity> getPurchaseitemCollection() {
         return purchaseitemCollection;
     }
 
-    public void setPurchaseitemCollection(Collection<Purchaseitem> purchaseitemCollection) {
+    public void setPurchaseitemCollection(Collection<PurchaseitemEntity> purchaseitemCollection) {
         this.purchaseitemCollection = purchaseitemCollection;
     }
 
@@ -122,10 +122,10 @@ public class Purchase implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Purchase)) {
+        if (!(object instanceof PurchaseEntity)) {
             return false;
         }
-        Purchase other = (Purchase) object;
+        PurchaseEntity other = (PurchaseEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
     @NamedQuery(name = "Product.findByMediapath", query = "SELECT p FROM Product p WHERE p.mediapath = :mediapath"),
     @NamedQuery(name = "Product.findByUnitprice", query = "SELECT p FROM Product p WHERE p.unitprice = :unitprice")})
-public class Product implements Serializable {
+public class ProductEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,16 +55,16 @@ public class Product implements Serializable {
     @Column(name = "unitprice")
     private long unitprice;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
-    private Collection<Purchaseitem> purchaseitemCollection;
+    private Collection<PurchaseitemEntity> purchaseitemCollection;
 
-    public Product() {
+    public ProductEntity() {
     }
 
-    public Product(Integer id) {
+    public ProductEntity(Integer id) {
         this.id = id;
     }
 
-    public Product(Integer id, String name, long unitprice) {
+    public ProductEntity(Integer id, String name, long unitprice) {
         this.id = id;
         this.name = name;
         this.unitprice = unitprice;
@@ -111,11 +111,11 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Purchaseitem> getPurchaseitemCollection() {
+    public Collection<PurchaseitemEntity> getPurchaseitemCollection() {
         return purchaseitemCollection;
     }
 
-    public void setPurchaseitemCollection(Collection<Purchaseitem> purchaseitemCollection) {
+    public void setPurchaseitemCollection(Collection<PurchaseitemEntity> purchaseitemCollection) {
         this.purchaseitemCollection = purchaseitemCollection;
     }
 
@@ -129,10 +129,10 @@ public class Product implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Product)) {
+        if (!(object instanceof ProductEntity)) {
             return false;
         }
-        Product other = (Product) object;
+        ProductEntity other = (ProductEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
