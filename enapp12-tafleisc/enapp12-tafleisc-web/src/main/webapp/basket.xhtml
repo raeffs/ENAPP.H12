@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/templates/template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <div class="producttable">
+            <div class="producttable-row producttable-header">
+                <div class="producttable-cell-3">
+                    Amount
+                </div>
+                <div class="producttable-cell-3">
+                    Quantity
+                </div>
+                <div class="producttable-cell-3">
+                    Unit Price
+                </div>
+                <div class="producttable-cell-last">
+                    Product
+                </div>
+            </div>
+            <c:forEach items="#{basketView.items}" var="item">
+                <div class="producttable-row">
+                    <div class="producttable-cell-3">
+                        <h:outputText value="#{item.lineAmount}">
+                            <f:convertNumber type="currency" groupingUsed="true"
+                                             maxFractionDigits="2" minFractionDigits="2" />
+                        </h:outputText>
+                    </div>
+                    <div class="producttable-cell-3">
+                        <h:outputText value="#{item.quantity}">
+                            <f:convertNumber type="currency" groupingUsed="true"
+                                             maxFractionDigits="2" minFractionDigits="2" />
+                        </h:outputText>
+                    </div>
+                    <div class="producttable-cell-3">
+                        <h:outputText value="#{item.unitPrice}">
+                            <f:convertNumber type="currency" groupingUsed="true"
+                                             maxFractionDigits="2" minFractionDigits="2" />
+                        </h:outputText>
+                    </div>
+                    <div class="producttable-cell-last">
+                        <h:outputText value="#{item.productName}" />
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </ui:define>
+
+</ui:composition>

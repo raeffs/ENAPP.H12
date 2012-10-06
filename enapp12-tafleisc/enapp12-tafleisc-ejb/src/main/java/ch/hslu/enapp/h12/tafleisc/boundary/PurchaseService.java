@@ -1,5 +1,6 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
 import ch.hslu.enapp.h12.tafleisc.control.ProductFacade;
@@ -27,16 +28,16 @@ public class PurchaseService implements IPurchaseService {
     private PurchaseFacade purchaseFacade;
     @Inject
     private PurchaseitemFacade purchaseitemFacade;
-    private Collection<PurchaseitemEntity> items;
+    private Collection<PurchaseitemEntity> basketItems;
 
     public PurchaseService() {
-        items = new ArrayList<PurchaseitemEntity>();
+        basketItems = new ArrayList<PurchaseitemEntity>();
     }
 
     public PurchaseService(ProductFacade productFacade,
             Collection<PurchaseitemEntity> collection) {
         this.productFacade = productFacade;
-        this.items = collection;
+        this.basketItems = collection;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class PurchaseService implements IPurchaseService {
         item.setQuantity(quantity);
         item.setUnitprice(product.getUnitprice());
         item.setLineamount(quantity * product.getUnitprice());
-        items.add(item);
+        basketItems.add(item);
     }
 
     @Override
@@ -86,9 +87,30 @@ public class PurchaseService implements IPurchaseService {
     }
 
     private void savePurchaseitems(int purchaseId) {
-        for (PurchaseitemEntity item : items) {
+        for (PurchaseitemEntity item : basketItems) {
             item.setPurchaseid(purchaseId);
             purchaseitemFacade.create(item);
         }
+    }
+
+    @Override
+    public Collection<PurchaseItem> getItemsInBasket() {
+        Collection<PurchaseItem> items = new ArrayList<PurchaseItem>();
+        for (PurchaseitemEntity entity : basketItems) {
+            PurchaseItem item = mapEntityToDto(entity);
+            items.add(item);
+        }
+        return items;
+    }
+
+    private PurchaseItem mapEntityToDto(PurchaseitemEntity entity) {
+        PurchaseItem dto = new PurchaseItem();
+        ProductEntity product = productFacade.find(entity.getProductid());
+        dto.setProductId(product.getId());
+        dto.setProductName(product.getName());
+        dto.setQuantity(entity.getQuantity());
+        dto.setUnitPrice(entity.getUnitprice());
+        dto.setLineAmount(entity.getLineamount());
+        return dto;
     }
 }
