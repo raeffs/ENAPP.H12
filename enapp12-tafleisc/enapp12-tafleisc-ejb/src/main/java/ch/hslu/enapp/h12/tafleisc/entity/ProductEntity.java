@@ -34,7 +34,7 @@ public class ProductEntity implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @Size(max = 45)
+    @Size(max = 250)
     @Column(name = "description")
     private String description;
     @Size(max = 180)

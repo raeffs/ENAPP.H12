@@ -11,39 +11,39 @@
         <h:form id="productform" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded;charset=UTF-8">
             <div class="producttable">
                 <div class="producttable-row producttable-header">
-                    <div class="producttable-cell-1"></div>
-                    <div class="producttable-cell-2">
+                    <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter"></div>
+                    <div class="producttable-cell pt-cell-250 pt-cell-left pt-cell-alignleft">
                         Product
                     </div>
-                    <div class="producttable-cell-3">
+                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                         Price
                     </div>
-                    <div class="producttable-cell-last">
+                    <div class="producttable-cell pt-cell-alignleft">
                         Description
                     </div>
                 </div>
                 <c:forEach items="#{productsView.products}" var="product">
                     <div class="producttable-row">
-                        <div class="producttable-cell-1">
+                        <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter">
                             <h:selectBooleanCheckbox value="#{product.selected}" />
                         </div>
-                        <div class="producttable-cell-2">
+                        <div class="producttable-cell pt-cell-250 pt-cell-left pt-cell-alignleft">
                             <h:outputText value="#{product.name}" />
                         </div>
-                        <div class="producttable-cell-3">
+                        <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                             <h:outputText value="#{product.unitPrice}">
                                 <f:convertNumber type="currency" groupingUsed="true"
                                                  maxFractionDigits="2" minFractionDigits="2" />
                             </h:outputText>
                         </div>
-                        <div class="producttable-cell-last">
+                        <div class="producttable-cell pt-cell-alignleft">
                             <h:outputText value="#{product.description}" />
                         </div>
                     </div>
                 </c:forEach>
                 <div class="producttable-row producttable-footer">
-                    <div class="producttable-cell-1"></div>
-                    <div class="producttable-cell-last">
+                    <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter"></div>
+                    <div class="producttable-cell pt-cell-alignleft">
                         <h:commandButton value="Add selected products to basket" actionListener="#{productsView.addButtonClicked}"/>
                     </div>
                 </div>

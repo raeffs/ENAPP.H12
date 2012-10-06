@@ -10,40 +10,39 @@
     <ui:define name="content">
         <div class="producttable">
             <div class="producttable-row producttable-header">
-                <div class="producttable-cell-3">
+                <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                     Amount
                 </div>
-                <div class="producttable-cell-3">
+                <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                     Quantity
                 </div>
-                <div class="producttable-cell-3">
+                <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                     Unit Price
                 </div>
-                <div class="producttable-cell-last">
+                <div class="producttable-cell pt-cell-alignleft">
                     Product
                 </div>
             </div>
             <c:forEach items="#{basketView.items}" var="item">
                 <div class="producttable-row">
-                    <div class="producttable-cell-3">
+                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                         <h:outputText value="#{item.lineAmount}">
                             <f:convertNumber type="currency" groupingUsed="true"
                                              maxFractionDigits="2" minFractionDigits="2" />
                         </h:outputText>
                     </div>
-                    <div class="producttable-cell-3">
+                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                         <h:outputText value="#{item.quantity}">
-                            <f:convertNumber type="currency" groupingUsed="true"
-                                             maxFractionDigits="2" minFractionDigits="2" />
+                            <f:convertNumber type="number" maxFractionDigits="0" />
                         </h:outputText>
                     </div>
-                    <div class="producttable-cell-3">
+                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                         <h:outputText value="#{item.unitPrice}">
                             <f:convertNumber type="currency" groupingUsed="true"
                                              maxFractionDigits="2" minFractionDigits="2" />
                         </h:outputText>
                     </div>
-                    <div class="producttable-cell-last">
+                    <div class="producttable-cell pt-cell-alignleft">
                         <h:outputText value="#{item.productName}" />
                     </div>
                 </div>

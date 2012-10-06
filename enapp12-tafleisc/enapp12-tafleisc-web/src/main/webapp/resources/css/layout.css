@@ -40,6 +40,7 @@ body {
     font-size: 15px;
     color: #333;
     letter-spacing: 0.2px;
+    line-height: 1.5;
 }
 
 a {
@@ -55,6 +56,7 @@ h1 {
     font-family: 'Alegreya', serif;
     font-size: 50px;
     letter-spacing: 0;
+    line-height: 1;
 }
 
 input {
@@ -127,28 +129,40 @@ input {
     background-color: #FFdd66;
 }
 
-.producttable-cell-1 {
-    float: left;
+.producttable-cell {
+    padding: 6px;
+}
+
+.producttable-cell input {
+    margin-top: 5px
+}
+
+.pt-cell-25 {
     width: 25px;
-    padding: 4px;
 }
 
-.producttable-cell-2 {
-    float: left;
+.pt-cell-250 {
     width: 250px;
-    text-align: left;
-    padding: 6px;
 }
 
-.producttable-cell-3 {
+.pt-cell-100 {
+    width: 100px;
+}
+
+.pt-cell-left {
+    float: left;
+}
+
+.pt-cell-right {
     float: right;
-    width: 75px;
-    padding: 6px;
 }
 
-.producttable-cell-last {
+.pt-cell-alignleft {
     text-align: left;
-    padding: 6px;
+}
+
+.pt-cell-aligncenter {
+    text-align: center;
 }
 
 .producttable-header {

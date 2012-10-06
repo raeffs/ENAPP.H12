@@ -3,7 +3,7 @@ CREATE DATABASE `enappwebshop`;
 CREATE TABLE `enappwebshop`.`product` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(45),
+  `description` VARCHAR(250),
   `mediapath` VARCHAR(180),
   `unitprice` DECIMAL NOT NULL,
   PRIMARY KEY (`id`)
