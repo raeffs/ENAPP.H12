@@ -1,53 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./resources/templates/template.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        <div class="producttable">
-            <div class="producttable-row producttable-header">
-                <div class="producttable-cell-1">
-                    &nbsp;
-                </div>
-                <div class="producttable-cell-2">
-                    Product
-                </div>
-                <div class="producttable-cell-3">
-                    Price
-                </div>
-                <div class="producttable-cell-last">
-                    Description
-                </div>
-            </div>
-            <c:forEach items="#{productsView.products}" var="product">
-                <div class="producttable-row">
-                    <div class="producttable-cell-1">
-                        <h:selectBooleanCheckbox />
-                    </div>
+        <h:form id="productform" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded;charset=UTF-8">
+            <div class="producttable">
+                <div class="producttable-row producttable-header">
+                    <div class="producttable-cell-1"></div>
                     <div class="producttable-cell-2">
-                        <h:outputText value="#{product.name}" />
+                        Product
                     </div>
                     <div class="producttable-cell-3">
-                        <h:outputText value="#{product.unitPrice}">
-                            <f:convertNumber type="currency" groupingUsed="true"
-                                             maxFractionDigits="2" minFractionDigits="2" />
-                        </h:outputText>
+                        Price
                     </div>
                     <div class="producttable-cell-last">
-                        <h:outputText value="#{product.description}" />
+                        Description
                     </div>
                 </div>
-            </c:forEach>
-            <div class="producttable-row producttable-footer">
-                <div class="producttable-cell-1"></div>
-                <div class="producttable-cell-last">
-                    <h:button value="Add selected products to basket" />
+                <c:forEach items="#{productsView.products}" var="product">
+                    <div class="producttable-row">
+                        <div class="producttable-cell-1">
+                            <h:selectBooleanCheckbox value="#{product.selected}" />
+                        </div>
+                        <div class="producttable-cell-2">
+                            <h:outputText value="#{product.name}" />
+                        </div>
+                        <div class="producttable-cell-3">
+                            <h:outputText value="#{product.unitPrice}">
+                                <f:convertNumber type="currency" groupingUsed="true"
+                                                 maxFractionDigits="2" minFractionDigits="2" />
+                            </h:outputText>
+                        </div>
+                        <div class="producttable-cell-last">
+                            <h:outputText value="#{product.description}" />
+                        </div>
+                    </div>
+                </c:forEach>
+                <div class="producttable-row producttable-footer">
+                    <div class="producttable-cell-1"></div>
+                    <div class="producttable-cell-last">
+                        <h:commandButton value="Add selected products to basket" actionListener="#{productsView.addButtonClicked}"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>
