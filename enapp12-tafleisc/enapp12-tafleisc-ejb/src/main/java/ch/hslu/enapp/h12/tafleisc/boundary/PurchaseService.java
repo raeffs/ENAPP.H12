@@ -28,11 +28,11 @@ public class PurchaseService implements IPurchaseService {
     @Inject
     private PurchaseitemFacade purchaseitemFacade;
     private Collection<PurchaseitemEntity> items;
-    
+
     public PurchaseService() {
         items = new ArrayList<PurchaseitemEntity>();
     }
-    
+
     public PurchaseService(ProductFacade productFacade,
             Collection<PurchaseitemEntity> collection) {
         this.productFacade = productFacade;
@@ -76,7 +76,7 @@ public class PurchaseService implements IPurchaseService {
         int purchaseId = createPurchase(customerId);
         savePurchaseitems(purchaseId);
     }
-    
+
     private int createPurchase(int customerId) {
         PurchaseEntity purchase = new PurchaseEntity(0);
         purchase.setCustomerid(customerId);
@@ -84,7 +84,7 @@ public class PurchaseService implements IPurchaseService {
         purchaseFacade.create(purchase);
         return purchase.getId();
     }
-    
+
     private void savePurchaseitems(int purchaseId) {
         for (PurchaseitemEntity item : items) {
             item.setPurchaseid(purchaseId);

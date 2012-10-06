@@ -1,0 +1,150 @@
+/* reset rules */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    border: 0px none;
+    font: inherit;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none outside none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+/* base rules */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #FF9922;
+}
+
+h1 {
+    font-family: 'Alegreya', serif;
+    font-size: 50px;
+}
+
+/* layout rules */
+
+#layout-header {
+    background-color: #333;
+    padding: 30px 0px;
+    position: relative;
+    text-align: center;
+    color: #FF9922;
+    border-bottom: 1px dotted #fafafa;
+}
+
+#layout-footer {
+    background-color: #333;
+    position: relative;
+    padding: 15px 0px;
+    text-align: center;
+    color: #FF9922;
+    border-top: 1px dotted #fafafa;
+}
+
+#layout-content {
+    position: relative;
+    background-color: #fafafa;
+    border-bottom: 2px solid #333;
+    padding: 15px 0px;
+    text-align: center;
+    min-height: 100px;
+}
+
+#layout-navigation {
+    position: relative;
+    text-align: center;
+    padding: 15px 0px;
+    border-top: 2px solid #333;
+    background-color: #fafafa;
+}
+
+/* module rules */
+
+#navigation li {
+    display: inline;
+}
+
+#navigation a:hover {
+    border-bottom: 1px dotted #FF9922;
+    padding-bottom: 3px;
+}
+
+.producttable {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.producttable-row {
+    overflow: hidden;
+    border-bottom: 1px solid #333;
+}
+
+.producttable-row:hover {
+    background-color: #FFdd66;
+}
+
+.producttable-header:hover {
+    background-color: inherit;
+}
+
+.producttable-cell-1 {
+    float: left;
+    width: 25px;
+    padding: 4px;
+}
+
+.producttable-cell-2 {
+    float: left;
+    width: 250px;
+    text-align: left;
+    padding: 6px;
+}
+
+.producttable-cell-3 {
+    float: right;
+    width: 75px;
+    padding: 6px;
+}
+
+.producttable-cell-last {
+    text-align: left;
+    padding: 6px;
+}
+
+.producttable-header {
+    font-weight: bold;
+}

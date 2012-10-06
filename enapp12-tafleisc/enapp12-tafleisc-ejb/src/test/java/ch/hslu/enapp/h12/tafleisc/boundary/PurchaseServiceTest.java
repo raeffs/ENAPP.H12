@@ -33,14 +33,14 @@ public class PurchaseServiceTest {
         setUpProductFacade();
         sut = new PurchaseService(productFacade, collection);
     }
-    
+
     @Test
-    public void addProductToBasket_productExists_addsProductToCollection() 
+    public void addProductToBasket_productExists_addsProductToCollection()
             throws InvalidProductException, InvalidQuantityException {
         sut.addProductToBasket(1, 1);
         verify(collection).add(any(PurchaseitemEntity.class));
     }
-    
+
     private void setUpProductFacade() {
         when(productFacade.exists(1)).thenReturn(true);
         when(productFacade.find(1)).thenReturn(new ProductEntity(1));

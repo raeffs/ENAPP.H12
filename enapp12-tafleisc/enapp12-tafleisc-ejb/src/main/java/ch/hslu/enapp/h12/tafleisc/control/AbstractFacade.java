@@ -53,7 +53,7 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    protected final <Y> T findSingleWhere(SingularAttribute<? super T, Y> attribute, Y value) {
+    protected <Y> T findSingleWhere(SingularAttribute<? super T, Y> attribute, Y value) {
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(entityClass);
         Root<T> root = query.from(entityClass);
