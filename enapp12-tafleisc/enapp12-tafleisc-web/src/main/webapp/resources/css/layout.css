@@ -39,6 +39,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     color: #333;
+    letter-spacing: 0.2px;
 }
 
 a {
@@ -53,6 +54,15 @@ a:hover {
 h1 {
     font-family: 'Alegreya', serif;
     font-size: 50px;
+    letter-spacing: 0;
+}
+
+input {
+    background-color: #333;
+    color: #FF9922;
+    border: 0;
+    padding: 6px;
+    font: inherit;
 }
 
 /* layout rules */
@@ -117,10 +127,6 @@ h1 {
     background-color: #FFdd66;
 }
 
-.producttable-header:hover {
-    background-color: inherit;
-}
-
 .producttable-cell-1 {
     float: left;
     width: 25px;
@@ -147,4 +153,18 @@ h1 {
 
 .producttable-header {
     font-weight: bold;
+    background-color: #333;
+    color: #FF9922;
+}
+
+.producttable-footer {
+    border-bottom: 0;
+}
+
+.producttable-header:hover {
+    background-color: #333;
+}
+
+.producttable-footer:hover {
+    background-color: inherit;
 }
