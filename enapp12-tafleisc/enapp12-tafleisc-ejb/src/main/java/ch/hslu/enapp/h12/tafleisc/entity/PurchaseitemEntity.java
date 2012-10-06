@@ -7,14 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -22,21 +19,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "purchaseitem")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Purchaseitem.findAll", query = "SELECT p FROM Purchaseitem p"),
-    @NamedQuery(name = "Purchaseitem.findById", query = "SELECT p FROM Purchaseitem p WHERE p.id = :id"),
-    @NamedQuery(name = "Purchaseitem.findByQuantity", query = "SELECT p FROM Purchaseitem p WHERE p.quantity = :quantity"),
-    @NamedQuery(name = "Purchaseitem.findByUnitprice", query = "SELECT p FROM Purchaseitem p WHERE p.unitprice = :unitprice"),
-    @NamedQuery(name = "Purchaseitem.findByLineamount", query = "SELECT p FROM Purchaseitem p WHERE p.lineamount = :lineamount"),
-    @NamedQuery(name = "Purchaseitem.findByDescription", query = "SELECT p FROM Purchaseitem p WHERE p.description = :description")})
+    @NamedQuery(name = "PurchaseitemEntity.findAll", query = "SELECT p FROM PurchaseitemEntity p")})
 public class PurchaseitemEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "purchaseid")
+    private int purchaseid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "productid")
+    private int productid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
@@ -52,12 +52,6 @@ public class PurchaseitemEntity implements Serializable {
     @Size(max = 90)
     @Column(name = "description")
     private String description;
-    @JoinColumn(name = "productid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private ProductEntity productid;
-    @JoinColumn(name = "purchaseid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private PurchaseEntity purchaseid;
 
     public PurchaseitemEntity() {
     }
@@ -66,8 +60,10 @@ public class PurchaseitemEntity implements Serializable {
         this.id = id;
     }
 
-    public PurchaseitemEntity(Integer id, long quantity, long unitprice, long lineamount) {
+    public PurchaseitemEntity(Integer id, int purchaseid, int productid, long quantity, long unitprice, long lineamount) {
         this.id = id;
+        this.purchaseid = purchaseid;
+        this.productid = productid;
         this.quantity = quantity;
         this.unitprice = unitprice;
         this.lineamount = lineamount;
@@ -79,6 +75,22 @@ public class PurchaseitemEntity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getPurchaseid() {
+        return purchaseid;
+    }
+
+    public void setPurchaseid(int purchaseid) {
+        this.purchaseid = purchaseid;
+    }
+
+    public int getProductid() {
+        return productid;
+    }
+
+    public void setProductid(int productid) {
+        this.productid = productid;
     }
 
     public long getQuantity() {
@@ -113,22 +125,6 @@ public class PurchaseitemEntity implements Serializable {
         this.description = description;
     }
 
-    public ProductEntity getProductid() {
-        return productid;
-    }
-
-    public void setProductid(ProductEntity productid) {
-        this.productid = productid;
-    }
-
-    public PurchaseEntity getPurchaseid() {
-        return purchaseid;
-    }
-
-    public void setPurchaseid(PurchaseEntity purchaseid) {
-        this.purchaseid = purchaseid;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -151,7 +147,6 @@ public class PurchaseitemEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.hslu.enapp.h12.tafleisc.entity.Purchaseitem[ id=" + id + " ]";
+        return "ch.hslu.enapp.h12.tafleisc.entity.PurchaseitemEntity[ id=" + id + " ]";
     }
-    
 }

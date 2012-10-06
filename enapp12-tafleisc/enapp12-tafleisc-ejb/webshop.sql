@@ -24,9 +24,7 @@ CREATE TABLE `enappwebshop`.`purchase` (
   `customerid` INTEGER UNSIGNED NOT NULL,
   `datetime` DATETIME NOT NULL,
   `status` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fkcustomer` FOREIGN KEY (`customerid`)
-    REFERENCES `enappwebshop`.`customer` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=INNODB;
  
 CREATE TABLE `enappwebshop`.`purchaseitem` (
@@ -37,9 +35,5 @@ CREATE TABLE `enappwebshop`.`purchaseitem` (
   `unitprice` DECIMAL NOT NULL,
   `lineamount` DECIMAL NOT NULL,
   `description` VARCHAR(90),
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fkpurchase` FOREIGN KEY (`purchaseid`)
-    REFERENCES `enappwebshop`.`purchase` (`id`),
-  CONSTRAINT `fkproduct` FOREIGN KEY (`productid`)
-    REFERENCES `enappwebshop`.`product` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=INNODB;

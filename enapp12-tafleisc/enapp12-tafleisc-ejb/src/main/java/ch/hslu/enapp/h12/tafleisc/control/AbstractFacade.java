@@ -2,12 +2,18 @@ package ch.hslu.enapp.h12.tafleisc.control;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 /**
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
 public abstract class AbstractFacade<T> {
+
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -47,12 +53,30 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    public int count() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
-        cq.select(getEntityManager().getCriteriaBuilder().count(rt));
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
-        return ((Long) q.getSingleResult()).intValue();
+    protected final <Y> T findSingleWhere(SingularAttribute<? super T, Y> attribute, Y value) {
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(entityClass);
+        Root<T> root = query.from(entityClass);
+        query.select(root).where(builder.equal(root.get(attribute), value));
+        try {
+            return getEntityManager().createQuery(query).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
-    
+
+    public int count() {
+        return countWhere(null, null);
+    }
+
+    protected <Y> int countWhere(SingularAttribute<? super T, Y> attribute, Y value) {
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<T> root = query.from(entityClass);
+        if (attribute != null) {
+            query.where(builder.equal(root.get(attribute), value));
+        }
+        query.select(builder.count(root));
+        return getEntityManager().createQuery(query).getSingleResult().intValue();
+    }
 }

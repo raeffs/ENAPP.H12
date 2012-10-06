@@ -1,9 +1,7 @@
 package ch.hslu.enapp.h12.tafleisc.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,16 +19,10 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "customer")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
-    @NamedQuery(name = "Customer.findById", query = "SELECT c FROM Customer c WHERE c.id = :id"),
-    @NamedQuery(name = "Customer.findByUsername", query = "SELECT c FROM Customer c WHERE c.username = :username"),
-    @NamedQuery(name = "Customer.findByPassword", query = "SELECT c FROM Customer c WHERE c.password = :password"),
-    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
-    @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address"),
-    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email")})
+    @NamedQuery(name = "CustomerEntity.findAll", query = "SELECT c FROM CustomerEntity c")})
 public class CustomerEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,8 +55,6 @@ public class CustomerEntity implements Serializable {
     @Size(min = 1, max = 90)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerid")
-    private Collection<PurchaseEntity> purchaseCollection;
 
     public CustomerEntity() {
     }
@@ -133,15 +120,6 @@ public class CustomerEntity implements Serializable {
         this.email = email;
     }
 
-    @XmlTransient
-    public Collection<PurchaseEntity> getPurchaseCollection() {
-        return purchaseCollection;
-    }
-
-    public void setPurchaseCollection(Collection<PurchaseEntity> purchaseCollection) {
-        this.purchaseCollection = purchaseCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -164,7 +142,6 @@ public class CustomerEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.hslu.enapp.h12.tafleisc.entity.Customer[ id=" + id + " ]";
+        return "ch.hslu.enapp.h12.tafleisc.entity.CustomerEntity[ id=" + id + " ]";
     }
-    
 }

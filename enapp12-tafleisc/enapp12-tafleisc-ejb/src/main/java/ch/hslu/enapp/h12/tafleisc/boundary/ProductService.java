@@ -15,15 +15,15 @@ import javax.inject.Inject;
  */
 @Stateless
 public class ProductService implements IProductService {
-    
+
     @Inject
     private ProductFacade productFacade;
-    
     @Inject
     private ProductMapper productMapper;
 
-    public ProductService() {}
-    
+    public ProductService() {
+    }
+
     public ProductService(ProductFacade productFacade, ProductMapper productMapper) {
         this.productFacade = productFacade;
         this.productMapper = productMapper;

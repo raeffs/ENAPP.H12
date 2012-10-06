@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PurchaseFacade extends AbstractFacade<PurchaseEntity> {
+
     @PersistenceContext(unitName = "ch.hslu.enapp.h12_enapp12-tafleisc-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -22,5 +23,4 @@ public class PurchaseFacade extends AbstractFacade<PurchaseEntity> {
     public PurchaseFacade() {
         super(PurchaseEntity.class);
     }
-    
 }

@@ -10,7 +10,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface IProductService {
-    
+
     Collection<Product> getProducts();
-    
 }

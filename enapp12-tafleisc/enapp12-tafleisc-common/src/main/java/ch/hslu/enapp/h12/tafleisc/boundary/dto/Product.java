@@ -5,7 +5,7 @@ package ch.hslu.enapp.h12.tafleisc.boundary.dto;
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
 public class Product {
-    
+
     private int productId;
     private String name;
     private String description;

@@ -1,9 +1,7 @@
 package ch.hslu.enapp.h12.tafleisc.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,15 +19,10 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "product")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
-    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
-    @NamedQuery(name = "Product.findByMediapath", query = "SELECT p FROM Product p WHERE p.mediapath = :mediapath"),
-    @NamedQuery(name = "Product.findByUnitprice", query = "SELECT p FROM Product p WHERE p.unitprice = :unitprice")})
+    @NamedQuery(name = "ProductEntity.findAll", query = "SELECT p FROM ProductEntity p")})
 public class ProductEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +44,6 @@ public class ProductEntity implements Serializable {
     @NotNull
     @Column(name = "unitprice")
     private long unitprice;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
-    private Collection<PurchaseitemEntity> purchaseitemCollection;
 
     public ProductEntity() {
     }
@@ -110,15 +98,6 @@ public class ProductEntity implements Serializable {
         this.unitprice = unitprice;
     }
 
-    @XmlTransient
-    public Collection<PurchaseitemEntity> getPurchaseitemCollection() {
-        return purchaseitemCollection;
-    }
-
-    public void setPurchaseitemCollection(Collection<PurchaseitemEntity> purchaseitemCollection) {
-        this.purchaseitemCollection = purchaseitemCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -141,7 +120,6 @@ public class ProductEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.hslu.enapp.h12.tafleisc.entity.Product[ id=" + id + " ]";
+        return "ch.hslu.enapp.h12.tafleisc.entity.ProductEntity[ id=" + id + " ]";
     }
-    
 }
