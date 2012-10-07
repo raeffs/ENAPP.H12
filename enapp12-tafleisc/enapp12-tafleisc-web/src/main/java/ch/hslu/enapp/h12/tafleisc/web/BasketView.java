@@ -5,6 +5,7 @@ import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -25,5 +26,9 @@ public class BasketView implements Serializable {
 
     public Collection<PurchaseItem> getItems() {
         return purchaseService.getItemsInBasket();
+    }
+
+    public void checkoutButtenClicked(ActionEvent event) {
+        purchaseService.checkout(1);
     }
 }

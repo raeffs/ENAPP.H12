@@ -45,8 +45,14 @@ public class PurchaseService implements IPurchaseService {
             throws InvalidProductException, InvalidQuantityException {
         validateProductId(productId);
         validateQuantity(quantity);
-        ProductEntity product = productFacade.find(productId);
-        addItemToBasket(product, quantity);
+        PurchaseitemEntity item = getItemFromBasket(productId);
+        if (item == null) {
+            ProductEntity product = productFacade.find(productId);
+            addItemToBasket(product, quantity);
+        } else {
+            item.setQuantity(item.getQuantity() + quantity);
+            item.setLineamount(item.getQuantity() * item.getUnitprice());
+        }
     }
 
     private void validateProductId(int productId)
@@ -61,6 +67,15 @@ public class PurchaseService implements IPurchaseService {
         if (quantity < 1) {
             throw new InvalidQuantityException();
         }
+    }
+
+    private PurchaseitemEntity getItemFromBasket(int productId) {
+        for (PurchaseitemEntity item : basketItems) {
+            if (item.getProductid() == productId) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private void addItemToBasket(ProductEntity product, int quantity) {
@@ -82,6 +97,7 @@ public class PurchaseService implements IPurchaseService {
         PurchaseEntity purchase = new PurchaseEntity(0);
         purchase.setCustomerid(customerId);
         purchase.setDatetime(new Date());
+        purchase.setStatus("test");
         purchaseFacade.create(purchase);
         return purchase.getId();
     }

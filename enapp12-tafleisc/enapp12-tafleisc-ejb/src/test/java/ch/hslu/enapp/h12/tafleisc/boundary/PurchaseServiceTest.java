@@ -5,6 +5,7 @@ import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
 import ch.hslu.enapp.h12.tafleisc.control.ProductFacade;
 import ch.hslu.enapp.h12.tafleisc.entity.ProductEntity;
 import ch.hslu.enapp.h12.tafleisc.entity.PurchaseitemEntity;
+import java.util.ArrayList;
 import java.util.Collection;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -24,13 +25,13 @@ public class PurchaseServiceTest {
     private IPurchaseService sut;
     @Mock
     private ProductFacade productFacade;
-    @Mock
     private Collection<PurchaseitemEntity> collection;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         setUpProductFacade();
+        collection = new ArrayList<PurchaseitemEntity>();
         sut = new PurchaseService(productFacade, collection);
     }
 
@@ -38,7 +39,7 @@ public class PurchaseServiceTest {
     public void addProductToBasket_productExists_addsProductToCollection()
             throws InvalidProductException, InvalidQuantityException {
         sut.addProductToBasket(1, 1);
-        verify(collection).add(any(PurchaseitemEntity.class));
+        assertEquals(1, collection.size());
     }
 
     private void setUpProductFacade() {
