@@ -24,7 +24,7 @@
                         Product
                     </div>
                 </div>
-                <c:forEach items="#{basketView.items}" var="item">
+                <c:forEach items="#{basket.items}" var="item">
                     <div class="producttable-row">
                         <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
                             <h:outputText value="#{item.lineAmount}">
@@ -50,7 +50,7 @@
                 </c:forEach>
                 <div class="producttable-row producttable-footer">
                     <div class="producttable-cell pt-cell-alignleft">
-                        <h:commandButton value="Checkout and continue with payment" actionListener="#{basketView.checkoutButtenClicked(event)}"/>
+                        <h:commandButton value="Checkout and continue with payment" actionListener="#{basket.checkoutButtenClicked(event)}"/>
                     </div>
                 </div>
             </div>

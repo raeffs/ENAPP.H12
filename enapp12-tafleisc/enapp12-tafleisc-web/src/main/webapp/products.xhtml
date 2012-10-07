@@ -22,7 +22,7 @@
                         Description
                     </div>
                 </div>
-                <c:forEach items="#{productsView.products}" var="product">
+                <c:forEach items="#{products.products}" var="product">
                     <div class="producttable-row">
                         <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter">
                             <h:selectBooleanCheckbox value="#{product.selected}" />
@@ -44,7 +44,7 @@
                 <div class="producttable-row producttable-footer">
                     <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter"></div>
                     <div class="producttable-cell pt-cell-alignleft">
-                        <h:commandButton value="Add selected products to basket" actionListener="#{productsView.addButtonClicked}"/>
+                        <h:commandButton value="Add selected products to basket" actionListener="#{products.addButtonClicked(event)}"/>
                     </div>
                 </div>
             </div>
