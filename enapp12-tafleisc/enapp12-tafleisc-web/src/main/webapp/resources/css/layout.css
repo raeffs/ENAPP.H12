@@ -41,6 +41,7 @@ body {
     color: #333;
     letter-spacing: 0.2px;
     line-height: 1.5;
+    background-color: #333;
 }
 
 a {
@@ -189,6 +190,10 @@ input {
 
 #logintable {
     width: 450px;
+}
+
+#logintable .cell-left {
+    padding-top: 16px;
 }
 
 /* state rules */
