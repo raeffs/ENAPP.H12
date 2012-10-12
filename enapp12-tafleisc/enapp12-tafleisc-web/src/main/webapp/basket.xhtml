@@ -7,49 +7,50 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <ui:param name="navigationLinkBasketClass" value="is-selected" />
     <ui:define name="content">
         <h:form id="productform">
-            <div class="producttable">
-                <div class="producttable-row producttable-header">
-                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+            <div class="csstable" id="baskettable">
+                <div class="csstable-row csstable-header">
+                    <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                         Amount
                     </div>
-                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                    <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                         Quantity
                     </div>
-                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                    <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                         Unit Price
                     </div>
-                    <div class="producttable-cell pt-cell-alignleft">
+                    <div class="csstable-cell cell-alignleft">
                         Product
                     </div>
                 </div>
                 <c:forEach items="#{basket.items}" var="item">
-                    <div class="producttable-row">
-                        <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                    <div class="csstable-row">
+                        <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                             <h:outputText value="#{item.lineAmount}">
                                 <f:convertNumber type="currency" groupingUsed="true"
                                                  maxFractionDigits="2" minFractionDigits="2" />
                             </h:outputText>
                         </div>
-                        <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                        <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                             <h:outputText value="#{item.quantity}">
                                 <f:convertNumber type="number" maxFractionDigits="0" />
                             </h:outputText>
                         </div>
-                        <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                        <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                             <h:outputText value="#{item.unitPrice}">
                                 <f:convertNumber type="currency" groupingUsed="true"
                                                  maxFractionDigits="2" minFractionDigits="2" />
                             </h:outputText>
                         </div>
-                        <div class="producttable-cell pt-cell-alignleft">
+                        <div class="csstable-cell cell-alignleft">
                             <h:outputText value="#{item.productName}" />
                         </div>
                     </div>
                 </c:forEach>
-                <div class="producttable-row producttable-footer">
-                    <div class="producttable-cell pt-cell-alignleft">
+                <div class="csstable-row csstable-footer">
+                    <div class="csstable-cell cell-alignleft">
                         <h:commandButton value="Checkout and continue with payment" actionListener="#{basket.checkoutButtenClicked(event)}"/>
                     </div>
                 </div>

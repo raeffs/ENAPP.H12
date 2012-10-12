@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -20,13 +21,17 @@
 
         <div id="layout-navigation">
             <ul id="navigation">
-                <li><a href="index.xhtml">Home</a></li>
+                <li><h:outputLink value="index.xhtml" styleClass="#{navigationLinkHomeClass}">
+                        <h:outputText value="Home" />
+                    </h:outputLink></li>
                 <li>&diams;</li>
-                <li><a href="products.xhtml">Products</a></li>
+                <li><h:outputLink value="products.xhtml" styleClass="#{navigationLinkProductsClass}">
+                        <h:outputText value="Products" />
+                    </h:outputLink></li>
                 <li>&diams;</li>
-                <li><a href="basket.xhtml">Basket</a></li>
-                <li>&diams;</li>
-                <li><a href="#">Login</a></li>
+                <li><h:outputLink value="basket.xhtml" styleClass="#{navigationLinkBasketClass}">
+                        <h:outputText value="Basket" />
+                    </h:outputLink></li>
             </ul>
         </div>
 

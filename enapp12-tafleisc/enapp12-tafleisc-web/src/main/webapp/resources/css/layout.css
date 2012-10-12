@@ -115,70 +115,85 @@ input {
     padding-bottom: 3px;
 }
 
-.producttable {
+.csstable {
     width: 75%;
     margin: 0 auto;
 }
 
-.producttable-row {
+.csstable-row {
     overflow: hidden;
     border-bottom: 1px solid #333;
 }
 
-.producttable-row:hover {
-    background-color: #FFdd66;
-}
-
-.producttable-cell {
+.csstable-cell {
     padding: 6px;
+    overflow: hidden;
 }
 
-.producttable-cell input {
+.csstable-cell input {
     margin-top: 5px
 }
 
-.pt-cell-25 {
+.cell-25 {
     width: 25px;
 }
 
-.pt-cell-250 {
+.cell-250 {
     width: 250px;
 }
 
-.pt-cell-100 {
+.cell-100 {
     width: 100px;
 }
 
-.pt-cell-left {
+.cell-left {
     float: left;
 }
 
-.pt-cell-right {
+.cell-right {
     float: right;
 }
 
-.pt-cell-alignleft {
+.cell-alignleft {
     text-align: left;
 }
 
-.pt-cell-aligncenter {
+.cell-aligncenter {
     text-align: center;
 }
 
-.producttable-header {
+.csstable-header {
     font-weight: bold;
     background-color: #333;
     color: #FF9922;
 }
 
-.producttable-footer {
+.csstable-footer {
     border-bottom: 0;
 }
 
-.producttable-header:hover {
+#producttable .csstable-row:hover,
+#baskettable .csstable-row:hover {
+    background-color: #FFdd66;
+}
+
+#producttable .csstable-header:hover,
+#baskettable .csstable-header:hover {
     background-color: #333;
 }
 
-.producttable-footer:hover {
+#producttable .csstable-footer:hover,
+#baskettable .csstable-footer:hover {
     background-color: inherit;
+}
+
+#logintable {
+    width: 450px;
+}
+
+/* state rules */
+
+.is-selected {
+    border-bottom: 1px dotted #333;
+    padding-bottom: 3px;
 }

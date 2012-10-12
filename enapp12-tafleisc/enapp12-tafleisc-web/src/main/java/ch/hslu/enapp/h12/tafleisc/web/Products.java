@@ -19,12 +19,12 @@ import javax.inject.Named;
  */
 @Named(value = "products")
 @RequestScoped
-public class ProductsViewModel {
+public class Products {
 
     @Inject
     private IProductService productService;
     @Inject
-    private BasketViewModel basketView;
+    private Basket basketView;
     private Collection<ProductModel> products;
 
     public Collection<ProductModel> getProducts() {
@@ -49,6 +49,6 @@ public class ProductsViewModel {
                 basketView.getPurchaseService().addProductToBasket(product.getId(), 1);
             }
         }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("./basket.html");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("./basket.xhtml");
     }
 }

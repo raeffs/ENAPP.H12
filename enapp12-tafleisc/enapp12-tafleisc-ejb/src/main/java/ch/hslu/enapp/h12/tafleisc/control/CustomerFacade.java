@@ -1,6 +1,7 @@
 package ch.hslu.enapp.h12.tafleisc.control;
 
 import ch.hslu.enapp.h12.tafleisc.entity.CustomerEntity;
+import ch.hslu.enapp.h12.tafleisc.entity.CustomerEntity_;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,5 +23,9 @@ public class CustomerFacade extends AbstractFacade<CustomerEntity> {
 
     public CustomerFacade() {
         super(CustomerEntity.class);
+    }
+
+    public CustomerEntity findByUsername(String username) {
+        return findSingleWhere(CustomerEntity_.username, username);
     }
 }

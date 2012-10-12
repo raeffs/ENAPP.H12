@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./resources/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:param name="navigationLinkLoginClass" value="is-selected" />
+    <ui:define name="content">
+        <form id="loginform" method="POST" action="j_security_check">
+            <div class="csstable" id="logintable">
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        User ID:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText id="j_username" tabindex="1" />
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Password:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputSecret id="j_password" tabindex="2"/>
+                    </div>
+                </div>
+                <div class="csstable-row csstable-footer">
+                    <div class="csstable-cell cell-aligncenter">
+                        <h:commandButton id="login" value="Login"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ui:define>
+
+</ui:composition>

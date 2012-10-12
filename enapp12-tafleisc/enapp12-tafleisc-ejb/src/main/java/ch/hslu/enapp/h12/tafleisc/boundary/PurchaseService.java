@@ -91,6 +91,7 @@ public class PurchaseService implements IPurchaseService {
     public void checkout(int customerId) {
         int purchaseId = createPurchase(customerId);
         savePurchaseitems(purchaseId);
+        basketItems.clear();
     }
 
     private int createPurchase(int customerId) {

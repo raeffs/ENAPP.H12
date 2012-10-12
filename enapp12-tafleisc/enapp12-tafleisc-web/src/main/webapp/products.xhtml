@@ -7,43 +7,44 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <ui:param name="navigationLinkProductsClass" value="is-selected" />
     <ui:define name="content">
         <h:form id="productform">
-            <div class="producttable">
-                <div class="producttable-row producttable-header">
-                    <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter"></div>
-                    <div class="producttable-cell pt-cell-250 pt-cell-left pt-cell-alignleft">
+            <div class="csstable" id="producttable">
+                <div class="csstable-row csstable-header">
+                    <div class="csstable-cell cell-25 cell-left cell-aligncenter"></div>
+                    <div class="csstable-cell cell-250 cell-left cell-alignleft">
                         Product
                     </div>
-                    <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                    <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                         Price
                     </div>
-                    <div class="producttable-cell pt-cell-alignleft">
+                    <div class="csstable-cell cell-alignleft">
                         Description
                     </div>
                 </div>
                 <c:forEach items="#{products.products}" var="product">
-                    <div class="producttable-row">
-                        <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter">
+                    <div class="csstable-row">
+                        <div class="csstable-cell cell-25 cell-left cell-aligncenter">
                             <h:selectBooleanCheckbox value="#{product.selected}" />
                         </div>
-                        <div class="producttable-cell pt-cell-250 pt-cell-left pt-cell-alignleft">
+                        <div class="csstable-cell cell-250 cell-left cell-alignleft">
                             <h:outputText value="#{product.name}" />
                         </div>
-                        <div class="producttable-cell pt-cell-100 pt-cell-right pt-cell-aligncenter">
+                        <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                             <h:outputText value="#{product.unitPrice}">
                                 <f:convertNumber type="currency" groupingUsed="true"
                                                  maxFractionDigits="2" minFractionDigits="2" />
                             </h:outputText>
                         </div>
-                        <div class="producttable-cell pt-cell-alignleft">
+                        <div class="csstable-cell cell-alignleft">
                             <h:outputText value="#{product.description}" />
                         </div>
                     </div>
                 </c:forEach>
-                <div class="producttable-row producttable-footer">
-                    <div class="producttable-cell pt-cell-25 pt-cell-left pt-cell-aligncenter"></div>
-                    <div class="producttable-cell pt-cell-alignleft">
+                <div class="csstable-row csstable-footer">
+                    <div class="csstable-cell cell-25 cell-left cell-aligncenter"></div>
+                    <div class="csstable-cell cell-alignleft">
                         <h:commandButton value="Add selected products to basket" actionListener="#{products.addButtonClicked(event)}"/>
                     </div>
                 </div>

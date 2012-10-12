@@ -8,6 +8,13 @@ CREATE TABLE `enappwebshop`.`product` (
   `unitprice` DECIMAL NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB;
+
+CREATE TABLE `enappwebshop`.`group` ( 
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(15) NOT NULL,
+  `description` VARCHAR(200) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB;
  
 CREATE TABLE `enappwebshop`.`customer` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -17,6 +24,12 @@ CREATE TABLE `enappwebshop`.`customer` (
   `address` VARCHAR(45) NOT NULL,
   `email` VARCHAR(90) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=INNODB;
+
+CREATE TABLE `enappwebshop`.`customer_group` (
+  `customer_id` INTEGER UNSIGNED NOT NULL,
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`customer_id`,`group_id`)
 ) ENGINE=INNODB;
  
 CREATE TABLE `enappwebshop`.`purchase` (
@@ -37,3 +50,9 @@ CREATE TABLE `enappwebshop`.`purchaseitem` (
   `description` VARCHAR(90),
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB;
+
+CREATE VIEW `enappwebshop`.`v_customer_group` AS
+SELECT  c.`username`, c.`password`, g.`name`
+ FROM `enappwebshop`.`customer_group` cg
+ INNER JOIN `enappwebshop`.`customer` c ON c.`id` = cg.`customer_id`
+ INNER JOIN `enappwebshop`.`group` g ON g.`id` =  cg.`group_id`;

@@ -1,12 +1,13 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
+import javax.ejb.Local;
+
 /**
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
+@Local
 public interface ICustomerService {
 
-    void login(String username, String password);
-
-    void logout();
+    int getCustomerId(String username);
 }
