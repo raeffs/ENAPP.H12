@@ -33,7 +33,7 @@
                         </div>
                         <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                             <h:outputText value="#{product.unitPrice}">
-                                <f:convertNumber type="currency" groupingUsed="true"
+                                <f:convertNumber type="number" pattern="CHF ####.##"
                                                  maxFractionDigits="2" minFractionDigits="2" />
                             </h:outputText>
                         </div>
