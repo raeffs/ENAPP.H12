@@ -2,8 +2,8 @@ package ch.hslu.enapp.h12.tafleisc.boundary;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Product;
 import ch.hslu.enapp.h12.tafleisc.boundary.mapping.ProductMapper;
-import ch.hslu.enapp.h12.tafleisc.control.ProductFacade;
-import ch.hslu.enapp.h12.tafleisc.entity.ProductEntity;
+import ch.hslu.enapp.h12.tafleisc.boundary.webservices.DynNavFacade;
+import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.Item;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.Stateless;
@@ -15,28 +15,22 @@ import javax.inject.Named;
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
 @Stateless
-@Named("LocalProductService")
-public class ProductService implements IProductService {
+@Named("ErpProductService")
+public class ErpProductService implements IProductService {
 
     @Inject
-    private ProductFacade productFacade;
+    private DynNavFacade serviceFacade;
+    
     @Inject
     private ProductMapper productMapper;
-
-    public ProductService() {
-    }
-
-    public ProductService(ProductFacade productFacade, ProductMapper productMapper) {
-        this.productFacade = productFacade;
-        this.productMapper = productMapper;
-    }
-
+    
     @Override
     public Collection<Product> getProducts() {
         Collection<Product> products = new ArrayList<Product>();
-        for (ProductEntity entity : productFacade.findAll()) {
-            products.add(productMapper.mapEntityToDto(entity));
+        for (Item item : serviceFacade.getItems()) {
+            products.add(productMapper.mapErpEntityToDto(item));
         }
         return products;
     }
+
 }

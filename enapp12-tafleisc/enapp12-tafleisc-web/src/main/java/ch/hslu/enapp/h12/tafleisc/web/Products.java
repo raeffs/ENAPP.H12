@@ -21,7 +21,7 @@ import javax.inject.Named;
 @RequestScoped
 public class Products {
 
-    @Inject
+    @Inject @Named("ErpProductService")
     private IProductService productService;
     @Inject
     private Basket basketView;
