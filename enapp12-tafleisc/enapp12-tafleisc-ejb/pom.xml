@@ -111,6 +111,43 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.jvnet.jax-ws-commons</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlFiles>
+                                <wsdlFile>dynnav.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <wsdlLocation>META-INF/wsdl/dynnav.wsdl</wsdlLocation>
+                            <staleFile>${project.build.directory}/jaxws/stale/item.stale</staleFile>
+                        </configuration>
+                        <id>wsimport-generate-item</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.xml</groupId>
+                        <artifactId>webservices-api</artifactId>
+                        <version>1.4</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
+                    <xnocompile>true</xnocompile>
+                    <verbose>true</verbose>
+                    <extension>true</extension>
+                    <catalog>${basedir}/src/jax-ws-catalog.xml</catalog>
+                    <target>2.0</target>
+                    <packageName>ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav</packageName>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <repositories>
