@@ -1,20 +1,16 @@
 package ch.hslu.enapp.h12.tafleisc.boundary.webservices;
 
-import ch.hslu.enapp.h12.tafleisc.helper.AuthenticationHelper;
 import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.Item;
 import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemFields;
 import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemFilter;
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemList;
 import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemPort;
 import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemService;
-import ch.hslu.enapp.h12.tafleisc.helper.ConfigurationHelper;
-import java.util.AbstractList;
+import ch.hslu.enapp.h12.tafleisc.helper.AuthenticationHelper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *
@@ -24,10 +20,13 @@ import javax.inject.Inject;
 @LocalBean
 public class DynNavFacade {
     
-    @Inject
-    private ConfigurationHelper configuration;
-
+    private static final String AUTHENTICATION_DOMAIN = "ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.domain";
+    private static final String AUTHENTICATION_USER = "ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.user";
+    private static final String AUTHENTICATION_PASSWORD = "ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.password";
+    
     private ItemPort servicePort;
+    
+    private Collection<Item> items;
     
     public DynNavFacade() {
         ItemService service = new ItemService();
@@ -35,12 +34,22 @@ public class DynNavFacade {
     }
     
     public Collection<Item> getItems() {
+        if (items == null) {
+            items = getItemsFromService();
+        }
+        return items;
+    }
+    
+    private Collection<Item> getItemsFromService() {
+        setServiceAuthenticator();
+        return servicePort.readMultiple(getFilters(), null, 0).getItem();
+    }
+    
+    private void setServiceAuthenticator() {
         AuthenticationHelper.setAuthenticator(
-                configuration.getDynNavDomain(),
-                configuration.getDynNavUser(),
-                configuration.getDynNavPassword());
-        ItemList items = servicePort.readMultiple(getFilters(), null, 0);
-        return items.getItem();
+                System.getProperty(AUTHENTICATION_DOMAIN),
+                System.getProperty(AUTHENTICATION_USER),
+                System.getProperty(AUTHENTICATION_PASSWORD));
     }
     
     private List<ItemFilter> getFilters() {
