@@ -53,7 +53,7 @@ public class PostfinanceFacade {
     private PaymentRequest getPaymentRequest(Purchase purchase) {
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setPurchaseId(purchase.getPurchaseId());
-        paymentRequest.setAmount(String.valueOf(purchase.getAmount()));
+        paymentRequest.setAmount(String.valueOf(purchase.getAmount() * 100));
         paymentRequest.setCardNumber(String.valueOf(purchase.getCreditCardNumber()));
         paymentRequest.setCardVerificationCode(String.valueOf(purchase.getCreditCardVerificationCode()));
         paymentRequest.setCardExpiryDate(

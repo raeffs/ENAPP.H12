@@ -7,6 +7,7 @@ import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
 import ch.hslu.enapp.h12.tafleisc.boundary.mapping.ProductMapper;
 import ch.hslu.enapp.h12.tafleisc.control.DynNavFacade;
+import ch.hslu.enapp.h12.tafleisc.control.EnappDeamonFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PostfinanceFacade;
 import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class PurchaseService implements IPurchaseService {
     private DynNavFacade productFacade;
     @Inject
     private PostfinanceFacade postfinance;
+    @Inject
+    private EnappDeamonFacade enappDeamon;
     @Inject
     private ProductMapper productMapper;
     
@@ -99,14 +102,15 @@ public class PurchaseService implements IPurchaseService {
         purchase.setPurchaseId(createPurchase());
         purchase.setAmount(getTotalAmount());
         String paymentId = postfinance.doPayment(purchase);
-        
+        purchase.setPaymentId(paymentId);
+        enappDeamon.sendPurchase(purchase, basketItems);
         
         basketItems.clear();
         return null;
     }
     
     private String createPurchase() {
-        return "TAFLEISC" + new Random().nextInt(10000);
+        return "" + new Random().nextInt(10000) * 10000;
     }
     
     private long getTotalAmount() {

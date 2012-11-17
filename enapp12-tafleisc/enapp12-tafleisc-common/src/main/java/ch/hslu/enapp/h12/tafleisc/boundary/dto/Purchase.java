@@ -12,6 +12,7 @@ public class Purchase {
     private int creditCardVerificationCode;
     private int creditCardExpiryYear;
     private int creditCardExpiryMonth;
+    private String paymentId;
 
     public String getPurchaseId() {
         return purchaseId;
@@ -59,6 +60,14 @@ public class Purchase {
 
     public void setCreditCardExpiryMonth(int creditCardExpiryMonth) {
         this.creditCardExpiryMonth = creditCardExpiryMonth;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
     
 }

@@ -14,7 +14,7 @@ public class PaymentRequestComposer extends PostRequestComposer<PaymentRequest> 
     
     @Override
     protected void addParameters(SortedMap<String, String> parameters, PaymentRequest payload) {
-        parameters.put(OPERATION_CODE_PARAMETER, payload.getOperationCode());
+        //parameters.put(OPERATION_CODE_PARAMETER, payload.getOperationCode());
         parameters.put(CURRENCY_PARAMETER, payload.getCurrency());
         parameters.put(PURCHASE_ID_PARAMETER, payload.getPurchaseId());
         parameters.put(AMOUNT_PARAMETER, payload.getAmount());
