@@ -1,16 +1,17 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Product;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
 import ch.hslu.enapp.h12.tafleisc.boundary.mapping.ProductMapper;
-import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
 import ch.hslu.enapp.h12.tafleisc.control.DynNavFacade;
-import ch.hslu.enapp.h12.tafleisc.control.PurchaseFacade;
-import ch.hslu.enapp.h12.tafleisc.control.PurchaseitemFacade;
+import ch.hslu.enapp.h12.tafleisc.control.PostfinanceFacade;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 
@@ -24,11 +25,10 @@ public class PurchaseService implements IPurchaseService {
     @Inject
     private DynNavFacade productFacade;
     @Inject
+    private PostfinanceFacade postfinance;
+    @Inject
     private ProductMapper productMapper;
-    @Inject
-    private PurchaseFacade purchaseFacade;
-    @Inject
-    private PurchaseitemFacade purchaseitemFacade;
+    
     private Collection<PurchaseItem> basketItems;
 
     public PurchaseService() {
@@ -89,13 +89,31 @@ public class PurchaseService implements IPurchaseService {
     }
 
     @Override
-    public void checkout(int customerId) {
-        // todo
-        basketItems.clear();
+    public Collection<PurchaseItem> getItemsInBasket() {
+        return basketItems;
     }
 
     @Override
-    public Collection<PurchaseItem> getItemsInBasket() {
-        return basketItems;
+    public Purchase checkout(Purchase purchase) {
+        // todo: create purchase
+        purchase.setPurchaseId(createPurchase());
+        purchase.setAmount(getTotalAmount());
+        String paymentId = postfinance.doPayment(purchase);
+        
+        
+        basketItems.clear();
+        return null;
+    }
+    
+    private String createPurchase() {
+        return "TAFLEISC" + new Random().nextInt(10000);
+    }
+    
+    private long getTotalAmount() {
+        long amount = 0;
+        for (PurchaseItem item : basketItems) {
+            amount += item.getLineAmount();
+        }
+        return amount;
     }
 }

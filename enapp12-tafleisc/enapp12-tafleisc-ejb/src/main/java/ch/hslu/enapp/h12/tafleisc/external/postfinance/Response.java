@@ -1,4 +1,4 @@
-package ch.hslu.enapp.h12.tafleisc.boundary.webservices.postfinance;
+package ch.hslu.enapp.h12.tafleisc.external.postfinance;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Response {
     
     @XmlAttribute(name="orderID")
-    private String orderId;
+    private String purchaseId;
     @XmlAttribute(name="PAYID")
     private String paymentId;
     @XmlAttribute(name="NCSTATUS")
@@ -47,8 +47,8 @@ public class Response {
     private String vc;
     */
 
-    public String getOrderId() {
-        return orderId;
+    public String getPurchaseId() {
+        return purchaseId;
     }
 
     public String getPaymentId() {

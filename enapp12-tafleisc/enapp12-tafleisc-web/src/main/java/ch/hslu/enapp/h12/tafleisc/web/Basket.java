@@ -2,6 +2,7 @@ package ch.hslu.enapp.h12.tafleisc.web;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.ICustomerService;
 import ch.hslu.enapp.h12.tafleisc.boundary.IPurchaseService;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import java.io.IOException;
 import java.io.Serializable;
@@ -37,7 +38,15 @@ public class Basket implements Serializable {
     public void checkout() throws IOException {
         Principal user = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         int userId = customerService.getCustomerId(user.getName());
-        purchaseService.checkout(userId);
+        
+        Purchase purchase = new Purchase();
+        purchase.setCreditCardNumber(5399999999999999L);
+        purchase.setCreditCardVerificationCode(123);
+        purchase.setCreditCardExpiryYear(20);
+        purchase.setCreditCardExpiryMonth(8);
+        purchaseService.checkout(purchase);
+        
+        
         FacesContext.getCurrentInstance().getExternalContext().redirect("./checkout.xhtml");
     }
 

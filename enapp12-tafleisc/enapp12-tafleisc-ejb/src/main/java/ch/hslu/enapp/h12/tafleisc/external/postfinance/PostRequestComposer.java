@@ -1,4 +1,4 @@
-package ch.hslu.enapp.h12.tafleisc.boundary.webservices.postfinance;
+package ch.hslu.enapp.h12.tafleisc.external.postfinance;
 
 import ch.hslu.enapp.h12.tafleisc.helper.MessageDigestHelper;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public abstract class PostRequestComposer<T> {
     public static final String AUTHENTICATION_USER_PARAMETER = "USERID";
     public static final String AUTHENTICATION_PASSWORD_PARAMETER = "PSWD";
     public static final String HASHED_SIGNATURE_PARAMETER = "SHASIGN";
-    public static final String ORDER_ID_PARAMETER = "ORDERID";
+    public static final String PURCHASE_ID_PARAMETER = "ORDERID";
     public static final String AMOUNT_PARAMETER = "AMOUNT";
     public static final String CURRENCY_PARAMETER = "CURRENCY";
     public static final String CARD_NUMBER_PARAMETER = "CARDNO";

@@ -1,4 +1,4 @@
-package ch.hslu.enapp.h12.tafleisc.boundary.webservices.postfinance;
+package ch.hslu.enapp.h12.tafleisc.external.postfinance;
 
 /**
  *
@@ -6,7 +6,7 @@ package ch.hslu.enapp.h12.tafleisc.boundary.webservices.postfinance;
  */
 public class PaymentRequest {
     
-    private String orderId;
+    private String purchaseId;
     private String amount;
     private String currency;
     private String cardNumber;
@@ -14,12 +14,12 @@ public class PaymentRequest {
     private String cardVerificationCode;
     private String operationCode;
 
-    public String getOrderId() {
-        return orderId;
+    public String getPurchaseId() {
+        return purchaseId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setPurchaseId(String orderId) {
+        this.purchaseId = orderId;
     }
 
     public String getAmount() {
