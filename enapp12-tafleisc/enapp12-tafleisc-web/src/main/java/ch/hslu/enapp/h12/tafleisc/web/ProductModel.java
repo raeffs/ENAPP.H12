@@ -10,7 +10,7 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ProductModel {
 
-    private int id;
+    private String id;
     private String name;
     private String description;
     private long unitPrice;
@@ -23,11 +23,11 @@ public class ProductModel {
         unitPrice = product.getUnitPrice();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -6,16 +6,16 @@ package ch.hslu.enapp.h12.tafleisc.boundary.dto;
  */
 public class Product {
 
-    private int productId;
+    private String productId;
     private String name;
     private String description;
     private long unitPrice;
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

@@ -150,7 +150,7 @@
                     <extension>true</extension>
                     <catalog>${basedir}/src/jax-ws-catalog.xml</catalog>
                     <target>2.0</target>
-                    <packageName>ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav</packageName>
+                    <packageName>ch.hslu.enapp.h12.tafleisc.external.dynnav</packageName>
                 </configuration>
             </plugin>
         </plugins>

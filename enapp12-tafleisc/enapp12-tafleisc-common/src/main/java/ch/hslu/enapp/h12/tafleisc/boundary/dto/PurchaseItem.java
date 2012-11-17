@@ -6,17 +6,16 @@ package ch.hslu.enapp.h12.tafleisc.boundary.dto;
  */
 public class PurchaseItem {
 
-    private int productId;
+    private String productId;
     private String productName;
     private long quantity;
     private long unitPrice;
-    private long lineAmount;
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
@@ -45,10 +44,6 @@ public class PurchaseItem {
     }
 
     public long getLineAmount() {
-        return lineAmount;
-    }
-
-    public void setLineAmount(long lineAmount) {
-        this.lineAmount = lineAmount;
+        return this.unitPrice * this.quantity;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Collection;
  */
 public interface IPurchaseService {
 
-    void addProductToBasket(int productId, int quantity)
+    void addProductToBasket(String productId, int quantity)
             throws InvalidProductException, InvalidQuantityException;
 
     Collection<PurchaseItem> getItemsInBasket();

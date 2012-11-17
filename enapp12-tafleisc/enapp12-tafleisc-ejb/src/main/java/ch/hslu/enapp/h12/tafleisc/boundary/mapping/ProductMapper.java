@@ -1,8 +1,7 @@
 package ch.hslu.enapp.h12.tafleisc.boundary.mapping;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Product;
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.Item;
-import ch.hslu.enapp.h12.tafleisc.entity.ProductEntity;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
 import javax.ejb.Stateless;
 
 /**
@@ -12,21 +11,12 @@ import javax.ejb.Stateless;
 @Stateless
 public class ProductMapper {
 
-    public Product mapEntityToDto(ProductEntity entity) {
-        Product dto = new Product();
-        dto.setProductId(entity.getId());
-        dto.setName(entity.getName());
-        dto.setDescription(entity.getDescription());
-        dto.setUnitPrice(entity.getUnitprice());
-        return dto;
-    }
-    
-    public Product mapErpEntityToDto(Item entity) {
-        Product dto = new Product();
-        dto.setProductId(Integer.parseInt(entity.getNo().substring(3)));
-        dto.setName(entity.getDescription());
-        dto.setDescription(String.format("by %s (%s)", entity.getOwner(), entity.getKind()));
-        dto.setUnitPrice(entity.getUnitPrice().longValue());
-        return dto;
+    public Product mapEntityToDto(Item source) {
+        Product destination = new Product();
+        destination.setProductId(source.getNo());
+        destination.setName(source.getDescription());
+        destination.setDescription(String.format("by %s (%s)", source.getOwner(), source.getKind()));
+        destination.setUnitPrice(source.getUnitPrice().longValue());
+        return destination;
     }
 }

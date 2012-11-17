@@ -1,10 +1,10 @@
-package ch.hslu.enapp.h12.tafleisc.boundary.webservices;
+package ch.hslu.enapp.h12.tafleisc.control;
 
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.Item;
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemFields;
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemFilter;
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemPort;
-import ch.hslu.enapp.h12.tafleisc.boundary.webservices.dynnav.ItemService;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.ItemFields;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.ItemFilter;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.ItemPort;
+import ch.hslu.enapp.h12.tafleisc.external.dynnav.ItemService;
 import ch.hslu.enapp.h12.tafleisc.helper.AuthenticationHelper;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,11 +33,26 @@ public class DynNavFacade {
         servicePort = service.getItemPort();
     }
     
-    public Collection<Item> getItems() {
+    public Collection<Item> findAll() {
         if (items == null) {
             items = getItemsFromService();
         }
         return items;
+    }
+    
+    public Item find(String productId) {
+        Item item = null;
+        for (Item candidate : findAll()) {
+            if (candidate.getNo().equals(productId)) {
+                item = candidate;
+                break;
+            }
+        }
+        return item;
+    }
+    
+    public boolean exists(String productId) {
+        return (find(productId) != null);
     }
     
     private Collection<Item> getItemsFromService() {
