@@ -52,9 +52,7 @@ public class PurchaseEntity implements Serializable {
     @NotNull
     @Column(name = "paymentid")
     private int paymentid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "correlationid")
     private String correlationid;
 
@@ -65,14 +63,13 @@ public class PurchaseEntity implements Serializable {
         this.id = id;
     }
 
-    public PurchaseEntity(Integer id, int customerid, Date datetime, int status, long totalamount, int paymentid, String correlationid) {
+    public PurchaseEntity(Integer id, int customerid, Date datetime, int status, long totalamount, int paymentid) {
         this.id = id;
         this.customerid = customerid;
         this.datetime = datetime;
         this.status = status;
         this.totalamount = totalamount;
         this.paymentid = paymentid;
-        this.correlationid = correlationid;
     }
 
     public Integer getId() {

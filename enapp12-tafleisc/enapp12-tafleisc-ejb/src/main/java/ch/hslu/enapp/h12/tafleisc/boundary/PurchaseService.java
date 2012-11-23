@@ -114,7 +114,7 @@ public class PurchaseService implements IPurchaseService {
         payment.setAmount(purchase.getTotalamount());
         int paymentId = postfinanceFacade.doPayment(payment);
         savePurchase(purchase, paymentId);
-        // todo: notify mdb
+        purchaseFacade.processPurchase(purchase.getId());
         basketItems.clear();
         return null;
     }

@@ -6,7 +6,8 @@ package ch.hslu.enapp.h12.tafleisc.boundary.dto;
  */
 public enum PurchaseStatus {
     Created(0),
-    Payed(1);
+    Payed(1),
+    Submitted(2);
     
     private final int index;
 

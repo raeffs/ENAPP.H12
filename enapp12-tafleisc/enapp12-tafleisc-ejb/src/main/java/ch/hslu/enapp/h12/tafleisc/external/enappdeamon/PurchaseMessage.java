@@ -17,9 +17,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PurchaseMessage {
     
     @XmlElement(name="payId")
-    private String paymentId;
+    private int paymentId;
     @XmlElement(name="purchaseId")
-    private String purchaseId;
+    private int purchaseId;
     @XmlElement(name="student")
     private String student;
     @XmlElement(name="totalPrice")
@@ -32,19 +32,19 @@ public class PurchaseMessage {
     @XmlElement(name="line")
     private Collection<Line> lines;
 
-    public String getPaymentId() {
+    public int getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(String paymentId) {
+    public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }
 
-    public String getPurchaseId() {
+    public int getPurchaseId() {
         return purchaseId;
     }
 
-    public void setPurchaseId(String purchaseId) {
+    public void setPurchaseId(int purchaseId) {
         this.purchaseId = purchaseId;
     }
 

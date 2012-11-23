@@ -31,7 +31,7 @@ CREATE TABLE `enappwebshop`.`purchase` (
   `status` INTEGER UNSIGNED NOT NULL,
   `totalamount` DECIMAL NOT NULL,
   `paymentid` INTEGER UNSIGNED NOT NULL,
-  `correlationid` VARCHAR(20) NOT NULL,
+  `correlationid` VARCHAR(20) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB;
  

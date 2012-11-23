@@ -66,6 +66,14 @@ public abstract class AbstractFacade<T> {
             return null;
         }
     }
+    
+    protected <Y> List<T> findMultipleWhere(SingularAttribute<? super T, Y> attribute, Y value) {
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(entityClass);
+        Root<T> root = query.from(entityClass);
+        query.select(root).where(builder.equal(root.get(attribute), value));
+        return getEntityManager().createQuery(query).getResultList();
+    }
 
     public int count() {
         return countWhere(null, null);

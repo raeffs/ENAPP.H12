@@ -24,6 +24,10 @@ public class CustomerFacade extends AbstractFacade<CustomerEntity> {
     public CustomerFacade() {
         super(CustomerEntity.class);
     }
+    
+    public CustomerEntity findById(int customerId) {
+        return findSingleWhere(CustomerEntity_.id, customerId);
+    }
 
     public CustomerEntity findByUsername(String username) {
         return findSingleWhere(CustomerEntity_.username, username);
