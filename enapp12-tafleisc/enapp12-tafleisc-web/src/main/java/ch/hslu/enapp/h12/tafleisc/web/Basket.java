@@ -2,7 +2,7 @@ package ch.hslu.enapp.h12.tafleisc.web;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.ICustomerService;
 import ch.hslu.enapp.h12.tafleisc.boundary.IPurchaseService;
-import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import java.io.IOException;
 import java.io.Serializable;
@@ -35,23 +35,24 @@ public class Basket implements Serializable {
         return purchaseService.getItemsInBasket();
     }
 
-    public void checkout() throws IOException {
+    public void checkout() throws Exception {
         Principal user = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-        int userId = customerService.getCustomerId(user.getName());
+        int customerId = customerService.getCustomerId(user.getName());
         
-        Purchase purchase = new Purchase();
-        purchase.setCreditCardNumber(5399999999999999L);
-        purchase.setCreditCardVerificationCode(123);
-        purchase.setCreditCardExpiryYear(20);
-        purchase.setCreditCardExpiryMonth(8);
-        purchaseService.checkout(purchase);
+        Payment payment = new Payment();
+        payment.setCustomerId(customerId);
+        payment.setCreditCardNumber(5399999999999999L);
+        payment.setCreditCardVerificationCode(123);
+        payment.setCreditCardExpiryYear(20);
+        payment.setCreditCardExpiryMonth(8);
+        purchaseService.checkout(payment);
         
         
         FacesContext.getCurrentInstance().getExternalContext().redirect("./checkout.xhtml");
     }
 
     public void checkoutButtenClicked(ActionEvent event)
-            throws IOException {
+            throws Exception {
         checkout();
     }
 }

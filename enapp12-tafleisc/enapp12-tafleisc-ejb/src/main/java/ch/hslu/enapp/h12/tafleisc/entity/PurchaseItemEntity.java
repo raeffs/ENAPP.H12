@@ -20,9 +20,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "purchaseitem")
 @NamedQueries({
-    @NamedQuery(name = "PurchaseitemEntity.findAll", query = "SELECT p FROM PurchaseitemEntity p")})
-public class PurchaseitemEntity implements Serializable {
-
+    @NamedQuery(name = "PurchaseItemEntity.findAll", query = "SELECT p FROM PurchaseItemEntity p")})
+public class PurchaseItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +34,9 @@ public class PurchaseitemEntity implements Serializable {
     private int purchaseid;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "productid")
-    private int productid;
+    private String productid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
@@ -49,18 +49,15 @@ public class PurchaseitemEntity implements Serializable {
     @NotNull
     @Column(name = "lineamount")
     private long lineamount;
-    @Size(max = 90)
-    @Column(name = "description")
-    private String description;
 
-    public PurchaseitemEntity() {
+    public PurchaseItemEntity() {
     }
 
-    public PurchaseitemEntity(Integer id) {
+    public PurchaseItemEntity(Integer id) {
         this.id = id;
     }
 
-    public PurchaseitemEntity(Integer id, int purchaseid, int productid, long quantity, long unitprice, long lineamount) {
+    public PurchaseItemEntity(Integer id, int purchaseid, String productid, long quantity, long unitprice, long lineamount) {
         this.id = id;
         this.purchaseid = purchaseid;
         this.productid = productid;
@@ -85,11 +82,11 @@ public class PurchaseitemEntity implements Serializable {
         this.purchaseid = purchaseid;
     }
 
-    public int getProductid() {
+    public String getProductid() {
         return productid;
     }
 
-    public void setProductid(int productid) {
+    public void setProductid(String productid) {
         this.productid = productid;
     }
 
@@ -117,14 +114,6 @@ public class PurchaseitemEntity implements Serializable {
         this.lineamount = lineamount;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -135,10 +124,10 @@ public class PurchaseitemEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PurchaseitemEntity)) {
+        if (!(object instanceof PurchaseItemEntity)) {
             return false;
         }
-        PurchaseitemEntity other = (PurchaseitemEntity) object;
+        PurchaseItemEntity other = (PurchaseItemEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -147,6 +136,7 @@ public class PurchaseitemEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.hslu.enapp.h12.tafleisc.entity.PurchaseitemEntity[ id=" + id + " ]";
+        return "ch.hslu.enapp.h12.tafleisc.entity.PurchaseItemEntity[ id=" + id + " ]";
     }
+    
 }

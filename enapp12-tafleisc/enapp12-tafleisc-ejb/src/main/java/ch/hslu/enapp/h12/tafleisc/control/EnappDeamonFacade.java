@@ -1,6 +1,6 @@
 package ch.hslu.enapp.h12.tafleisc.control;
 
-import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.Customer;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.Line;
@@ -37,7 +37,7 @@ public class EnappDeamonFacade {
     @Resource(mappedName = "jms/enappqueue")
     private Queue queue;
     
-    public void sendPurchase(Purchase purchase, Collection<PurchaseItem> items) {
+    public void sendPurchase(Payment purchase, Collection<PurchaseItem> items) {
         PurchaseMessage message = getPurchaseMessage(purchase, items);
         String content = marshalMessage(message);
         try {
@@ -73,10 +73,10 @@ public class EnappDeamonFacade {
         return textMessage;
     }
 
-    private PurchaseMessage getPurchaseMessage(Purchase purchase, Collection<PurchaseItem> items) {
+    private PurchaseMessage getPurchaseMessage(Payment purchase, Collection<PurchaseItem> items) {
         PurchaseMessage message = new PurchaseMessage();
-        message.setPurchaseId(purchase.getPurchaseId());
-        message.setPaymentId(purchase.getPaymentId());
+        message.setPurchaseId(String.valueOf(purchase.getPurchaseId()));
+        //message.setPaymentId(purchase.getPaymentId());
         message.setStudent("tafleisc");
         message.setTotalAmount(purchase.getAmount());
         message.setDate(new Date());

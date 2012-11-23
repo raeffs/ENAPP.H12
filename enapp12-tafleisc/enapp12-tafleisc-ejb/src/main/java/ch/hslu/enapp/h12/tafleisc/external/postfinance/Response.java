@@ -13,9 +13,9 @@ public class Response {
     @XmlAttribute(name="orderID")
     private String purchaseId;
     @XmlAttribute(name="PAYID")
-    private String paymentId;
+    private int paymentId;
     @XmlAttribute(name="NCSTATUS")
-    private String errorState;
+    private int errorState;
     @XmlAttribute(name="NCERROR")
     private String errorCode;
     @XmlAttribute(name="NCERRORPLUS")
@@ -34,28 +34,16 @@ public class Response {
     private String paymentMethod;
     @XmlAttribute(name="BRAND")
     private String paymentMethodBrand;
-    /*
-    @XmlAttribute(name="IPCTY")
-    private String ipcty;
-    @XmlAttribute(name="CCCTY")
-    private String ccty;
-    @XmlAttribute(name="CVCCheck")
-    private String cvcCheck;
-    @XmlAttribute(name="AAVCheck")
-    private String aavCheck;
-    @XmlAttribute(name="VC")
-    private String vc;
-    */
 
     public String getPurchaseId() {
         return purchaseId;
     }
 
-    public String getPaymentId() {
+    public int getPaymentId() {
         return paymentId;
     }
 
-    public String getErrorState() {
+    public int getErrorState() {
         return errorState;
     }
 

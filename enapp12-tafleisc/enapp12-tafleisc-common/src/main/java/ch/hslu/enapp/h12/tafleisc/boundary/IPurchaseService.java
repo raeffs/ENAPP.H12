@@ -1,9 +1,10 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
-import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
+import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.PaymentFailedException;
 import java.util.Collection;
 
 /**
@@ -17,5 +18,6 @@ public interface IPurchaseService {
 
     Collection<PurchaseItem> getItemsInBasket();
 
-    Purchase checkout(Purchase purchase);
+    Payment checkout(Payment purchase)
+            throws PaymentFailedException;
 }

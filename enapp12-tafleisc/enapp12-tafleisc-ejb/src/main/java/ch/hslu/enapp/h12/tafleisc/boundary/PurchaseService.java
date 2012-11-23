@@ -1,18 +1,24 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Product;
-import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseStatus;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
+import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.PaymentFailedException;
 import ch.hslu.enapp.h12.tafleisc.boundary.mapping.ProductMapper;
+import ch.hslu.enapp.h12.tafleisc.boundary.mapping.PurchaseItemMapper;
 import ch.hslu.enapp.h12.tafleisc.control.DynNavFacade;
-import ch.hslu.enapp.h12.tafleisc.control.EnappDeamonFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PostfinanceFacade;
+import ch.hslu.enapp.h12.tafleisc.control.PurchaseFacade;
+import ch.hslu.enapp.h12.tafleisc.control.PurchaseItemFacade;
+import ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity;
+import ch.hslu.enapp.h12.tafleisc.entity.PurchaseItemEntity;
 import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
+import java.util.Date;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 
@@ -26,11 +32,15 @@ public class PurchaseService implements IPurchaseService {
     @Inject
     private DynNavFacade productFacade;
     @Inject
-    private PostfinanceFacade postfinance;
+    private PostfinanceFacade postfinanceFacade;
     @Inject
-    private EnappDeamonFacade enappDeamon;
+    private PurchaseFacade purchaseFacade;
+    @Inject
+    private PurchaseItemFacade purchaseItemFacade;
     @Inject
     private ProductMapper productMapper;
+    @Inject
+    private PurchaseItemMapper purchaseItemMapper;
     
     private Collection<PurchaseItem> basketItems;
 
@@ -97,20 +107,32 @@ public class PurchaseService implements IPurchaseService {
     }
 
     @Override
-    public Purchase checkout(Purchase purchase) {
-        // todo: create purchase
-        purchase.setPurchaseId(createPurchase());
-        purchase.setAmount(getTotalAmount());
-        String paymentId = postfinance.doPayment(purchase);
-        purchase.setPaymentId(paymentId);
-        enappDeamon.sendPurchase(purchase, basketItems);
-        
+    public Payment checkout(Payment payment) throws PaymentFailedException {
+        PurchaseEntity purchase = createPurchase(payment.getCustomerId());
+        saveBasketItems(purchase.getId());
+        payment.setPurchaseId(purchase.getId());
+        payment.setAmount(purchase.getTotalamount());
+        int paymentId = postfinanceFacade.doPayment(payment);
+        savePurchase(purchase, paymentId);
+        // todo: notify mdb
         basketItems.clear();
         return null;
     }
     
-    private String createPurchase() {
-        return "" + new Random().nextInt(10000) * 10000;
+    private PurchaseEntity createPurchase(int customerId) {
+        PurchaseEntity purchase = new PurchaseEntity(0);
+        purchase.setCustomerid(customerId);
+        purchase.setDatetime(new Date());
+        purchase.setStatus(PurchaseStatus.Created.getIndex());
+        purchase.setTotalamount(getTotalAmount());
+        purchaseFacade.create(purchase);
+        return purchase;
+    }
+    
+    private void savePurchase(PurchaseEntity purchase, int paymentId) {
+        purchase.setPaymentid(paymentId);
+        purchase.setStatus(PurchaseStatus.Payed.getIndex());
+        purchaseFacade.edit(purchase);
     }
     
     private long getTotalAmount() {
@@ -120,4 +142,13 @@ public class PurchaseService implements IPurchaseService {
         }
         return amount;
     }
+    
+    private void saveBasketItems(int purchaseId) {
+        for (PurchaseItem item : basketItems) {
+            PurchaseItemEntity entity = purchaseItemMapper.mapDtoToEntity(item);
+            entity.setPurchaseid(purchaseId);
+            purchaseItemFacade.create(entity);
+        }
+    }
+    
 }

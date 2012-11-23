@@ -25,7 +25,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "PurchaseEntity.findAll", query = "SELECT p FROM PurchaseEntity p")})
 public class PurchaseEntity implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +42,21 @@ public class PurchaseEntity implements Serializable {
     private Date datetime;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
     @Column(name = "status")
-    private String status;
+    private int status;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "totalamount")
+    private long totalamount;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "paymentid")
+    private int paymentid;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "correlationid")
+    private String correlationid;
 
     public PurchaseEntity() {
     }
@@ -54,11 +65,14 @@ public class PurchaseEntity implements Serializable {
         this.id = id;
     }
 
-    public PurchaseEntity(Integer id, int customerid, Date datetime, String status) {
+    public PurchaseEntity(Integer id, int customerid, Date datetime, int status, long totalamount, int paymentid, String correlationid) {
         this.id = id;
         this.customerid = customerid;
         this.datetime = datetime;
         this.status = status;
+        this.totalamount = totalamount;
+        this.paymentid = paymentid;
+        this.correlationid = correlationid;
     }
 
     public Integer getId() {
@@ -85,12 +99,36 @@ public class PurchaseEntity implements Serializable {
         this.datetime = datetime;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getTotalamount() {
+        return totalamount;
+    }
+
+    public void setTotalamount(long totalamount) {
+        this.totalamount = totalamount;
+    }
+
+    public int getPaymentid() {
+        return paymentid;
+    }
+
+    public void setPaymentid(int paymentid) {
+        this.paymentid = paymentid;
+    }
+
+    public String getCorrelationid() {
+        return correlationid;
+    }
+
+    public void setCorrelationid(String correlationid) {
+        this.correlationid = correlationid;
     }
 
     @Override
@@ -117,4 +155,5 @@ public class PurchaseEntity implements Serializable {
     public String toString() {
         return "ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity[ id=" + id + " ]";
     }
+    
 }

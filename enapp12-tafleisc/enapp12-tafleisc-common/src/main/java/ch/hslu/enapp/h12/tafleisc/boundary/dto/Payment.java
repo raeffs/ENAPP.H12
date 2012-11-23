@@ -4,22 +4,30 @@ package ch.hslu.enapp.h12.tafleisc.boundary.dto;
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
-public class Purchase {
+public class Payment {
     
-    private String purchaseId;
+    private int purchaseId;
+    private int customerId;
     private long amount;
     private long creditCardNumber;
     private int creditCardVerificationCode;
     private int creditCardExpiryYear;
     private int creditCardExpiryMonth;
-    private String paymentId;
 
-    public String getPurchaseId() {
+    public int getPurchaseId() {
         return purchaseId;
     }
 
-    public void setPurchaseId(String purchaseId) {
+    public void setPurchaseId(int purchaseId) {
         this.purchaseId = purchaseId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public long getAmount() {
@@ -61,13 +69,4 @@ public class Purchase {
     public void setCreditCardExpiryMonth(int creditCardExpiryMonth) {
         this.creditCardExpiryMonth = creditCardExpiryMonth;
     }
-
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
-    
 }

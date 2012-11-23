@@ -1,17 +1,14 @@
 package ch.hslu.enapp.h12.tafleisc.control;
 
-import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
+import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.PaymentFailedException;
 import ch.hslu.enapp.h12.tafleisc.external.postfinance.PaymentRequest;
 import ch.hslu.enapp.h12.tafleisc.external.postfinance.PaymentRequestComposer;
 import ch.hslu.enapp.h12.tafleisc.external.postfinance.Response;
-import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,58 +24,62 @@ public class PostfinanceFacade {
     
     private static final String PAYMENT_URL = "https://e-payment.postfinance.ch/ncol/test/orderdirect.asp";
     private static final String OPERATION_CODE = "SAL";
+    private static final String CURRENCY_CODE = "CHF";
+    private static final String PURCHASE_ID_FORMAT = "TAFLEISC%s";
     
     @Inject
     private PaymentRequestComposer requestComposer;
 
-    public String doPayment(Purchase purchase) {
-        PaymentRequest paymentRequest = getPaymentRequest(purchase);
+    public int doPayment(Payment payment) throws PaymentFailedException {
+        PaymentRequest paymentRequest = getPaymentRequest(payment);
         HttpPost postRequest = requestComposer.composeRequest(paymentRequest);
         postRequest.setURI(URI.create(PAYMENT_URL));
-        
-        String paymentId = null;
         HttpClient client = new DefaultHttpClient();
+        HttpResponse httpResponse = null;
         try {
-            HttpResponse httpResponse = client.execute(postRequest);
-            checkHttpState(httpResponse);
-            Response response = unmarshalResponse(httpResponse);
-            checkResponse(response);
-            paymentId = response.getPaymentId();
+            httpResponse = client.execute(postRequest);
         } catch (Exception e) {
-            Logger.getLogger(PostfinanceFacade.class.getName()).log(Level.INFO, e.getMessage());
+            throw new PaymentFailedException(String.format("Payment request failed: %s", e.getMessage()));
         }
-        return paymentId;
+        checkHttpState(httpResponse);
+        Response response = unmarshalResponse(httpResponse);
+        checkResponse(response);
+        return response.getPaymentId();
     }
     
-    private PaymentRequest getPaymentRequest(Purchase purchase) {
+    private PaymentRequest getPaymentRequest(Payment payment) {
         PaymentRequest paymentRequest = new PaymentRequest();
-        paymentRequest.setPurchaseId(purchase.getPurchaseId());
-        paymentRequest.setAmount(String.valueOf(purchase.getAmount() * 100));
-        paymentRequest.setCardNumber(String.valueOf(purchase.getCreditCardNumber()));
-        paymentRequest.setCardVerificationCode(String.valueOf(purchase.getCreditCardVerificationCode()));
+        paymentRequest.setPurchaseId(String.format(PURCHASE_ID_FORMAT, payment.getPurchaseId()));
+        paymentRequest.setAmount(String.valueOf(payment.getAmount() * 100));
+        paymentRequest.setCardNumber(String.valueOf(payment.getCreditCardNumber()));
+        paymentRequest.setCardVerificationCode(String.valueOf(payment.getCreditCardVerificationCode()));
         paymentRequest.setCardExpiryDate(
-                String.format("%02d", purchase.getCreditCardExpiryMonth()) + String.format("%02d", purchase.getCreditCardExpiryYear()));
-        paymentRequest.setCurrency("CHF");
+                String.format("%02d", payment.getCreditCardExpiryMonth()) + String.format("%02d", payment.getCreditCardExpiryYear()));
+        paymentRequest.setCurrency(CURRENCY_CODE);
         paymentRequest.setOperationCode(OPERATION_CODE);
         return paymentRequest;
     }
     
-    private void checkResponse(Response response) throws Exception {
-        if (Integer.parseInt(response.getErrorState()) != 0) {
-            throw new Exception(String.format("Payment failed: %s", response.getErrorMessage()));
+    private void checkResponse(Response response) throws PaymentFailedException {
+        if (response.getErrorState() != 0) {
+            throw new PaymentFailedException(String.format("Postfinance service reported an error: %s", response.getErrorMessage()));
         }
     }
     
-    private void checkHttpState(HttpResponse httpResponse) throws Exception {
+    private void checkHttpState(HttpResponse httpResponse) throws PaymentFailedException {
         int state = httpResponse.getStatusLine().getStatusCode();
         if (state < 200 || state >= 300) {
-            throw new Exception(httpResponse.getStatusLine().getReasonPhrase());
+            throw new PaymentFailedException(String.format("Payment request failed: %s", httpResponse.getStatusLine().getReasonPhrase()));
         }
     }
     
-    private Response unmarshalResponse(HttpResponse httpResponse) throws JAXBException, IOException {
-        Unmarshaller unmarshaller = JAXBContext.newInstance(Response.class).createUnmarshaller();
-        return (Response) unmarshaller.unmarshal(httpResponse.getEntity().getContent());
+    private Response unmarshalResponse(HttpResponse httpResponse) throws PaymentFailedException {
+        try {
+            Unmarshaller unmarshaller = JAXBContext.newInstance(Response.class).createUnmarshaller();
+            return (Response) unmarshaller.unmarshal(httpResponse.getEntity().getContent());
+        } catch (Exception e) {
+            throw new PaymentFailedException(String.format("Could not unmarshal response from postfinance service: %s", e.getMessage()));
+        }
     }
 
 }
