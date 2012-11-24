@@ -11,5 +11,6 @@
         <module>enapp12-tafleisc-web</module>
         <module>enapp12-tafleisc-ejb</module>
         <module>enapp12-tafleisc-common</module>
+        <module>enapp12-tafleisc-admin</module>
     </modules>
 </project>

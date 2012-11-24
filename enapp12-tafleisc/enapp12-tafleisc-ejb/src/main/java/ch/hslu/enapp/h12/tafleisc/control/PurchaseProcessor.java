@@ -20,7 +20,7 @@ import javax.inject.Inject;
 @Stateless
 public class PurchaseProcessor {
 
-    private static final int REFRESH_INTERVAL_IN_MS = 10000;
+    private static final int REFRESH_INTERVAL_IN_MS = 2000;
     @Resource
     private TimerService timerService;
     @Inject

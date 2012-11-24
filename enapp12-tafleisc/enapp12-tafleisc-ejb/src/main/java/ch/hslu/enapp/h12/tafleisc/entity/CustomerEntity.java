@@ -58,6 +58,10 @@ public class CustomerEntity implements Serializable {
     @Size(max = 10)
     @Column(name = "dynnavid")
     private String dynnavid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "groupid")
+    private int groupid;
 
     public CustomerEntity() {
     }
@@ -66,13 +70,14 @@ public class CustomerEntity implements Serializable {
         this.id = id;
     }
 
-    public CustomerEntity(Integer id, String username, String password, String name, String address, String email) {
+    public CustomerEntity(Integer id, String username, String password, String name, String address, String email, int groupid) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
         this.address = address;
         this.email = email;
+        this.groupid = groupid;
     }
 
     public Integer getId() {
@@ -129,6 +134,14 @@ public class CustomerEntity implements Serializable {
 
     public void setDynnavid(String dynnavid) {
         this.dynnavid = dynnavid;
+    }
+
+    public int getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(int groupid) {
+        this.groupid = groupid;
     }
 
     @Override

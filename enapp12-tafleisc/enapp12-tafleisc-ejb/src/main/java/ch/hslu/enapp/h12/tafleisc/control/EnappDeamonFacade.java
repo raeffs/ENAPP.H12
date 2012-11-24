@@ -8,6 +8,7 @@ import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.Line;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.PurchaseMessage;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.SalesOrder;
 import java.io.StringWriter;
+import java.net.ProxySelector;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -29,6 +30,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 
 /**
  *
@@ -131,7 +133,10 @@ public class EnappDeamonFacade {
 
     public SalesOrder getOrderState(String correlationId) throws Exception {
         HttpGet getRequest = new HttpGet(String.format(STATUS_URL, correlationId));
-        HttpClient client = new DefaultHttpClient();
+        DefaultHttpClient client = new DefaultHttpClient();
+        client.setRoutePlanner(new ProxySelectorRoutePlanner(
+                client.getConnectionManager().getSchemeRegistry(),
+                ProxySelector.getDefault()));
         HttpResponse httpResponse = null;
         try {
             httpResponse = client.execute(getRequest);

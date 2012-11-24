@@ -5,15 +5,18 @@ import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.PaymentFailedException;
 import ch.hslu.enapp.h12.tafleisc.external.postfinance.PaymentRequest;
 import ch.hslu.enapp.h12.tafleisc.external.postfinance.PaymentRequestComposer;
 import ch.hslu.enapp.h12.tafleisc.external.postfinance.Response;
+import java.net.ProxySelector;
 import java.net.URI;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 
 /**
  *
@@ -33,7 +36,10 @@ public class PostfinanceFacade {
         PaymentRequest paymentRequest = getPaymentRequest(payment);
         HttpPost postRequest = requestComposer.composeRequest(paymentRequest);
         postRequest.setURI(URI.create(PAYMENT_URL));
-        HttpClient client = new DefaultHttpClient();
+        DefaultHttpClient client = new DefaultHttpClient();
+        client.setRoutePlanner(new ProxySelectorRoutePlanner(
+                client.getConnectionManager().getSchemeRegistry(),
+                ProxySelector.getDefault()));
         HttpResponse httpResponse = null;
         try {
             httpResponse = client.execute(postRequest);

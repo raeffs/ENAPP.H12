@@ -1,7 +1,12 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Customer;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.CustomerInfo;
+import ch.hslu.enapp.h12.tafleisc.boundary.mapping.CustomerMapper;
 import ch.hslu.enapp.h12.tafleisc.control.CustomerFacade;
 import ch.hslu.enapp.h12.tafleisc.entity.CustomerEntity;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -14,6 +19,8 @@ public class CustomerService implements ICustomerService {
 
     @Inject
     private CustomerFacade customerFacade;
+    @Inject
+    private CustomerMapper customerMapper;
 
     @Override
     public int getCustomerId(String username) {
@@ -22,5 +29,26 @@ public class CustomerService implements ICustomerService {
             return customer.getId();
         }
         return 0;
+    }
+
+    @Override
+    public Collection<CustomerInfo> getCustomers() {
+        Collection<CustomerInfo> customers = new ArrayList<CustomerInfo>();
+        for (CustomerEntity entity : customerFacade.findAll()) {
+            customers.add(customerMapper.mapEntityToCustomerInfo(entity));
+        }
+        return customers;
+    }
+
+    @Override
+    public Customer getCustomer(int customerId) {
+        return customerMapper.mapEntityToDto(customerFacade.findById(customerId));
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        CustomerEntity entity = customerFacade.findById(customer.getCustomerId());
+        customerMapper.mapDtoToEntity(customer, entity);
+        customerFacade.edit(entity);
     }
 }

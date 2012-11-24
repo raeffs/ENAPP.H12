@@ -1,6 +1,6 @@
 CREATE DATABASE `enappwebshop`;
  
-CREATE TABLE `enappwebshop`.`group` ( 
+CREATE TABLE `enappwebshop`.`customergroup` ( 
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(15) NOT NULL,
   `description` VARCHAR(200) NULL,
@@ -15,15 +15,10 @@ CREATE TABLE `enappwebshop`.`customer` (
   `address` VARCHAR(45) NOT NULL,
   `email` VARCHAR(90) NOT NULL,
   `dynnavid` VARCHAR(10) NULL,
+  `groupid` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB;
 
-CREATE TABLE `enappwebshop`.`customer_group` (
-  `customer_id` INTEGER UNSIGNED NOT NULL,
-  `group_id` INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY (`customer_id`,`group_id`)
-) ENGINE=INNODB;
- 
 CREATE TABLE `enappwebshop`.`purchase` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `customerid` INTEGER UNSIGNED NOT NULL,
@@ -47,6 +42,5 @@ CREATE TABLE `enappwebshop`.`purchaseitem` (
 
 CREATE VIEW `enappwebshop`.`v_customer_group` AS
 SELECT  c.`username`, c.`password`, g.`name`
- FROM `enappwebshop`.`customer_group` cg
- INNER JOIN `enappwebshop`.`customer` c ON c.`id` = cg.`customer_id`
- INNER JOIN `enappwebshop`.`group` g ON g.`id` =  cg.`group_id`;
+ FROM `enappwebshop`.`customer` c
+ LEFT JOIN `enappwebshop`.`customergroup` g ON g.`id` =  c.`groupid`;
