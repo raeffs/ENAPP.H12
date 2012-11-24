@@ -24,7 +24,7 @@ public class Products {
     @Inject
     private IProductService productService;
     @Inject
-    private Basket basketView;
+    private Basket basket;
     private Collection<ProductModel> products;
 
     public Collection<ProductModel> getProducts() {
@@ -46,7 +46,7 @@ public class Products {
             throws InvalidProductException, InvalidQuantityException, IOException {
         for (ProductModel product : products) {
             if (product.isSelected()) {
-                basketView.getPurchaseService().addProductToBasket(product.getId(), 1);
+                basket.getPurchaseService().addProductToBasket(product.getId(), 1);
             }
         }
         FacesContext.getCurrentInstance().getExternalContext().redirect("./basket.xhtml");

@@ -188,12 +188,20 @@ input {
     background-color: inherit;
 }
 
-#logintable {
+#logintable,
+#checkouttable {
     width: 450px;
 }
 
-#logintable .cell-left {
+#logintable .cell-left,
+#checkouttable .cell-left {
     padding-top: 16px;
+}
+
+.validation {
+    list-style: disc inside none;
+    font-size: 0.8em;
+    color: red;
 }
 
 /* state rules */

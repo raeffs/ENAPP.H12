@@ -2,11 +2,64 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./resources/templates/template.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="./resources/templates/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:param name="navigationLinkBasketClass" value="is-selected" />
     <ui:define name="content">
-        Your order has been placed!
+        <h:form id="checkoutform">
+            <div class="csstable" id="checkouttable">
+                <div class="csstable-row csstable-header">
+                    <div class="csstable-cell cell-aligncenter">
+                        Credit card information
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-alignleft">
+                        <h:messages class="validation" />
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Credit card number:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${checkout.creditCardNumber}" tabindex="1" 
+                                     validatorMessage="Enter a valid credit card number! Supported credit cards are MasterCard, Visa, American Express and Diners. You can enter the number as a whole or separated by spaces or hyphens.">
+                            <f:validateRegex pattern="(\d{4}([- ]*\d{4}){3})|(\d{4}[- ]*\d{6}[- ]*\d{5})|(\d{4}[- ]*\d{6}[- ]*\d{4})" />
+                        </h:inputText>
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Verification code:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${checkout.creditCardVerificationCode}" tabindex="2"
+                                     validatorMessage="Enter a valid verification code! The verification code contains three or four digits and can be found on the back of your credit card.">
+                            <f:validateRegex pattern="\d{3,4}" />
+                        </h:inputText>
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Expiry date (month / year):
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${checkout.creditCardExpiryDate}" tabindex="3"
+                                     validatorMessage="Enter a valid expiry date! The expiry date has the format month/year whereas month and year consist each of two digits, for example 12/15.">
+                            <f:validateRegex pattern="((0*[1-9])|(1[0-2]))\/(\d{2})" />
+                        </h:inputText>
+                    </div>
+                </div>
+                <div class="csstable-row csstable-footer">
+                    <div class="csstable-cell cell-aligncenter">
+                        <h:commandButton value="Checkout" actionListener="${checkout.checkoutButtenClicked(event)}" />
+                    </div>
+                </div>
+            </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>
