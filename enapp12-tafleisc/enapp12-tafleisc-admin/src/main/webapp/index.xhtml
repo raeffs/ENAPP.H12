@@ -18,6 +18,8 @@
                         <li class="active"><h:outputLink value="index.xhtml">
                                 <h:outputText value="Customers" />
                             </h:outputLink></li>
+                        <li><a href="#">Groups</a></li>
+                        <li><a href="#">Purchases</a></li>
                     </ul>
                 </div>
                 <div class="span9 container-fluid">
@@ -42,12 +44,15 @@
                             </table>
                         </h:form>
                         <h:panelGroup rendered="${customerController.inEditMode}" layout="block" class="span8">
-                            <h3>Edit customer ${customerController.currentItem.name}</h3>
+                            <h3>Edit customer &#171;${customerController.currentItem.name}&#187;</h3>
                             <h:form class="form-horizontal">
                                 <div class="control-group">
                                     <label class="control-label" for="username">Username</label>
                                     <div class="controls">
-                                        <span class="uneditable-input">${customerController.currentItem.username}</span>
+                                        <div class="input-append">
+                                            <span class="uneditable-input">${customerController.currentItem.username}</span>
+                                            <span class="add-on"><i class="icon-user"></i></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -65,7 +70,10 @@
                                 <div class="control-group">
                                     <label class="control-label" for="email">Email</label>
                                     <div class="controls">
-                                        <span class="uneditable-input">${customerController.currentItem.email}</span>
+                                        <div class="input-append">
+                                            <span class="uneditable-input">${customerController.currentItem.email}</span>
+                                            <span class="add-on"><i class="icon-envelope"></i></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="control-group">
