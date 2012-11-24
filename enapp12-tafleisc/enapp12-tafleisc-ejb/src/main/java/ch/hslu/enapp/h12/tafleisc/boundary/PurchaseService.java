@@ -13,6 +13,7 @@ import ch.hslu.enapp.h12.tafleisc.control.DynNavFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PostfinanceFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PurchaseFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PurchaseItemFacade;
+import ch.hslu.enapp.h12.tafleisc.control.PurchaseProcessor;
 import ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity;
 import ch.hslu.enapp.h12.tafleisc.entity.PurchaseItemEntity;
 import ch.hslu.enapp.h12.tafleisc.external.dynnav.Item;
@@ -41,6 +42,8 @@ public class PurchaseService implements IPurchaseService {
     private ProductMapper productMapper;
     @Inject
     private PurchaseItemMapper purchaseItemMapper;
+    @Inject
+    private PurchaseProcessor purchaseProcessor;
     
     private Collection<PurchaseItem> basketItems;
 
@@ -114,7 +117,7 @@ public class PurchaseService implements IPurchaseService {
         payment.setAmount(purchase.getTotalamount());
         int paymentId = postfinanceFacade.doPayment(payment);
         savePurchase(purchase, paymentId);
-        purchaseFacade.processPurchase(purchase.getId());
+        purchaseProcessor.beginPurchaseProcessing(purchase.getId());
         basketItems.clear();
         return null;
     }

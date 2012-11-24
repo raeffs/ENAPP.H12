@@ -7,26 +7,19 @@ import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.SalesOrder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.ejb.ActivationConfigProperty;
-import javax.ejb.MessageDriven;
+import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import javax.inject.Inject;
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import javax.jms.MessageListener;
 
 
 /**
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
-@MessageDriven(mappedName = "jms/localqueue", activationConfig = {
-    @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
-    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
-})
-public class PurchaseProcessor implements MessageListener {
+@Stateless
+public class PurchaseProcessor {
     
     private static final int REFRESH_INTERVAL_IN_MS = 10000;
     
@@ -40,29 +33,38 @@ public class PurchaseProcessor implements MessageListener {
     @Inject
     private CustomerFacade customerFacade;
     
-    @Override
-    public void onMessage(Message message) {
-        try {
-            int purchaseId = ((MapMessage)message).getInt("PurchaseID");
-            PurchaseEntity purchase = purchaseFacade.findById(purchaseId);
-            String correlationId = enappDeamonFacade.sendPurchase(purchase);
-            purchase.setCorrelationid(correlationId);
-            purchase.setStatus(PurchaseStatus.Submitted.getIndex());
-            purchaseFacade.edit(purchase);
-            schedulePurchaseCheck(purchaseId);
-        } catch (Exception e) {
-            Logger.getLogger(PurchaseProcessor.class.getName()).log(Level.INFO, e.getMessage());
-        }
+    public void beginPurchaseProcessing(int purchaseId) {
+        scheduleProcessing(purchaseId);
     }
     
-    private void schedulePurchaseCheck(int purchaseId) {
+    private void scheduleProcessing(int purchaseId) {
         timerService.createTimer(REFRESH_INTERVAL_IN_MS, purchaseId);
     }
     
     @Timeout
-    public void purchaseCheck(Timer timer) {
+    public void process(Timer timer) {
         int purchaseId = Integer.parseInt(timer.getInfo().toString());
         PurchaseEntity purchase = purchaseFacade.findById(purchaseId);
+        processPurchase(purchase);
+    }
+    
+    private void processPurchase(PurchaseEntity purchase) {
+        if (purchase.getCorrelationid() == null || purchase.getCorrelationid().length() == 0) {
+            sendPurchaseToErpSystem(purchase);
+        } else {
+            checkPurchaseStatus(purchase);
+        }
+    }
+    
+    private void sendPurchaseToErpSystem(PurchaseEntity purchase) {
+        String correlationId = enappDeamonFacade.sendPurchase(purchase);
+        purchase.setCorrelationid(correlationId);
+        purchase.setStatus(PurchaseStatus.Submitted.getIndex());
+        purchaseFacade.edit(purchase);
+        scheduleProcessing(purchase.getId());
+    }
+    
+    public void checkPurchaseStatus(PurchaseEntity purchase) {
         SalesOrder order = null;
         try {
             order = enappDeamonFacade.getOrderState(purchase.getCorrelationid());
@@ -72,7 +74,7 @@ public class PurchaseProcessor implements MessageListener {
         if (order == null || order.hasFailed()) {
             purchase.setStatus(PurchaseStatus.Failed.getIndex());
         } else if (order.isProcessing()) {
-            schedulePurchaseCheck(purchaseId);
+            scheduleProcessing(purchase.getId());
         } else if (order.isOk()) {
             if (order.wasCustomerCreated()) {
                 assignExternalCustomerId(purchase.getCustomerid(), order.getExternalCustomerId());
