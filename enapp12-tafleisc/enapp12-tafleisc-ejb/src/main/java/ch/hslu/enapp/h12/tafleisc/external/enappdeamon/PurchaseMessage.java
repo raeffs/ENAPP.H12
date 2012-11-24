@@ -12,24 +12,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
-@XmlRootElement(name="purchaseMessage")
+@XmlRootElement(name = "purchaseMessage")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PurchaseMessage {
-    
-    @XmlElement(name="payId")
+
+    @XmlElement(name = "payId")
     private int paymentId;
-    @XmlElement(name="purchaseId")
+    @XmlElement(name = "purchaseId")
     private int purchaseId;
-    @XmlElement(name="student")
+    @XmlElement(name = "student")
     private String student;
-    @XmlElement(name="totalPrice")
+    @XmlElement(name = "totalPrice")
     private long totalAmount;
-    @XmlElement(name="date")
+    @XmlElement(name = "date")
     private Date date;
-    @XmlElement(name="customer")
+    @XmlElement(name = "customer")
     private Customer customer;
-    @XmlElementWrapper(name="lines")
-    @XmlElement(name="line")
+    @XmlElementWrapper(name = "lines")
+    @XmlElement(name = "line")
     private Collection<Line> lines;
 
     public int getPaymentId() {
@@ -87,5 +87,4 @@ public class PurchaseMessage {
     public void setLines(Collection<Line> lines) {
         this.lines = lines;
     }
-    
 }

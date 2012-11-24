@@ -10,14 +10,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Line {
-    
-    @XmlElement(name="msDynNAVItemNo")
+
+    @XmlElement(name = "msDynNAVItemNo")
     private String productId;
-    @XmlElement(name="description")
+    @XmlElement(name = "description")
     private String description;
-    @XmlElement(name="quantity")
+    @XmlElement(name = "quantity")
     private long quantity;
-    @XmlElement(name="totalLinePrice")
+    @XmlElement(name = "totalLinePrice")
     private long amount;
 
     public String getProductId() {
@@ -51,5 +51,4 @@ public class Line {
     public void setAmount(long amount) {
         this.amount = amount;
     }
-    
 }

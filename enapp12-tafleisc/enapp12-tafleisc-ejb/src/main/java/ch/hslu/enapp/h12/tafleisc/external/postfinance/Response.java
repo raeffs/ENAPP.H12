@@ -9,30 +9,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ncresponse")
 public class Response {
-    
-    @XmlAttribute(name="orderID")
+
+    @XmlAttribute(name = "orderID")
     private String purchaseId;
-    @XmlAttribute(name="PAYID")
+    @XmlAttribute(name = "PAYID")
     private int paymentId;
-    @XmlAttribute(name="NCSTATUS")
+    @XmlAttribute(name = "NCSTATUS")
     private int errorState;
-    @XmlAttribute(name="NCERROR")
+    @XmlAttribute(name = "NCERROR")
     private String errorCode;
-    @XmlAttribute(name="NCERRORPLUS")
+    @XmlAttribute(name = "NCERRORPLUS")
     private String errorMessage;
-    @XmlAttribute(name="ACCEPTANCE")
+    @XmlAttribute(name = "ACCEPTANCE")
     private String acceptanceCode;
-    @XmlAttribute(name="STATUS")
+    @XmlAttribute(name = "STATUS")
     private String transactionState;
-    @XmlAttribute(name="ECI")
+    @XmlAttribute(name = "ECI")
     private String eci;
-    @XmlAttribute(name="amount")
+    @XmlAttribute(name = "amount")
     private String amount;
-    @XmlAttribute(name="currency")
+    @XmlAttribute(name = "currency")
     private String currency;
-    @XmlAttribute(name="PM")
+    @XmlAttribute(name = "PM")
     private String paymentMethod;
-    @XmlAttribute(name="BRAND")
+    @XmlAttribute(name = "BRAND")
     private String paymentMethodBrand;
 
     public String getPurchaseId() {
@@ -82,5 +82,4 @@ public class Response {
     public String getPaymentMethodBrand() {
         return paymentMethodBrand;
     }
-    
 }

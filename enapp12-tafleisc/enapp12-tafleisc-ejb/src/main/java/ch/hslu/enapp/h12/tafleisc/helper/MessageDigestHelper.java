@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 @Stateless
 @LocalBean
 public class MessageDigestHelper {
-    
+
     public String computeSha1Hash(String plaintext) {
         String hash = "";
         try {
@@ -24,7 +24,7 @@ public class MessageDigestHelper {
         }
         return hash;
     }
-    
+
     private String convertToHexString(byte[] bytes) {
         Formatter formatter = new Formatter();
         for (byte b : bytes) {
@@ -32,5 +32,4 @@ public class MessageDigestHelper {
         }
         return formatter.toString();
     }
-    
 }

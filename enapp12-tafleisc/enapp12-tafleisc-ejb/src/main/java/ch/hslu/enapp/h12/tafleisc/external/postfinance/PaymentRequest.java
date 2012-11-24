@@ -5,7 +5,7 @@ package ch.hslu.enapp.h12.tafleisc.external.postfinance;
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
 public class PaymentRequest {
-    
+
     private String purchaseId;
     private String amount;
     private String currency;
@@ -69,5 +69,4 @@ public class PaymentRequest {
     public void setOperationCode(String operationCode) {
         this.operationCode = operationCode;
     }
-    
 }

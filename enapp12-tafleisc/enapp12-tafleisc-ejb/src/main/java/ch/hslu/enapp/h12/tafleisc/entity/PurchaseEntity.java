@@ -25,6 +25,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "PurchaseEntity.findAll", query = "SELECT p FROM PurchaseEntity p")})
 public class PurchaseEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -152,5 +153,4 @@ public class PurchaseEntity implements Serializable {
     public String toString() {
         return "ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity[ id=" + id + " ]";
     }
-    
 }

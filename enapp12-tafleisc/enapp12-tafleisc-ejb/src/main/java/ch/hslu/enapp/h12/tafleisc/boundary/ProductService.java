@@ -18,10 +18,9 @@ public class ProductService implements IProductService {
 
     @Inject
     private DynNavFacade productFacade;
-    
     @Inject
     private ProductMapper productMapper;
-    
+
     @Override
     public Collection<Product> getProducts() {
         Collection<Product> products = new ArrayList<Product>();
@@ -30,5 +29,4 @@ public class ProductService implements IProductService {
         }
         return products;
     }
-
 }

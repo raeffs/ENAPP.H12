@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 @Stateless
 @LocalBean
 public class PaymentRequestComposer extends PostRequestComposer<PaymentRequest> {
-    
+
     @Override
     protected void addParameters(SortedMap<String, String> parameters, PaymentRequest payload) {
         //parameters.put(OPERATION_CODE_PARAMETER, payload.getOperationCode());
@@ -22,5 +22,4 @@ public class PaymentRequestComposer extends PostRequestComposer<PaymentRequest> 
         parameters.put(CARD_EXPIRY_DATE_PARAMETER, payload.getCardExpiryDate());
         parameters.put(CARD_VERIFICATION_CODE_PARAMETER, payload.getCardVerificationCode());
     }
-
 }

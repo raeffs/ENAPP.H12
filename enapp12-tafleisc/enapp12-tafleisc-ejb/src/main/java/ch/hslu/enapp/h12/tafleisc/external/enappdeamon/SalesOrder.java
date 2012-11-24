@@ -10,36 +10,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
-@XmlRootElement(name="salesorder")
+@XmlRootElement(name = "salesorder")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SalesOrder {
-    
+
     private static final String STATUS_PROCESSING = "00";
     private static final String STATUS_FAILED = "10";
     private static final String STATUS_OK = "000";
     private static final String STATUS_CUSTOMERCREATED = "010";
-    
-    @XmlElement(name="correlationId")
+    @XmlElement(name = "correlationId")
     private String correlationId;
-    @XmlElement(name="dynNAVCustomerNo")
+    @XmlElement(name = "dynNAVCustomerNo")
     private String externalCustomerId;
-    @XmlElement(name="dynNAVSalesOrderNo")
+    @XmlElement(name = "dynNAVSalesOrderNo")
     private String externalOrderId;
-    @XmlElement(name="lastUpdate")
+    @XmlElement(name = "lastUpdate")
     private Date modificationDate;
-    @XmlElement(name="postFinancePayId")
+    @XmlElement(name = "postFinancePayId")
     private int paymentId;
-    @XmlElement(name="purchaseDateTime")
+    @XmlElement(name = "purchaseDateTime")
     private Date purchaseDateTime;
-    @XmlElement(name="purchaseId")
+    @XmlElement(name = "purchaseId")
     private int purchaseId;
-    @XmlElement(name="purchaseItemCount")
+    @XmlElement(name = "purchaseItemCount")
     private int itemCount;
-    @XmlElement(name="purchaseTotalCost")
+    @XmlElement(name = "purchaseTotalCost")
     private long totalAmount;
-    @XmlElement(name="status")
+    @XmlElement(name = "status")
     private String orderStatus;
-    @XmlElement(name="studentName")
+    @XmlElement(name = "studentName")
     private String studentName;
 
     public String getCorrelationId() {
@@ -85,19 +84,19 @@ public class SalesOrder {
     public String getStudentName() {
         return studentName;
     }
-    
+
     public boolean isProcessing() {
         return getOrderStatus().equals(STATUS_PROCESSING);
     }
-    
+
     public boolean hasFailed() {
         return getOrderStatus().equals(STATUS_FAILED);
     }
-    
+
     public boolean wasCustomerCreated() {
         return getOrderStatus().equals(STATUS_CUSTOMERCREATED);
     }
-    
+
     public boolean isOk() {
         return getOrderStatus().equals(STATUS_OK) || wasCustomerCreated();
     }

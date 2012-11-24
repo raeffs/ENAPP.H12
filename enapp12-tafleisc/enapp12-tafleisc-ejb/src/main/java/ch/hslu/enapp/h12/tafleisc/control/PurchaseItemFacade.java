@@ -25,7 +25,7 @@ public class PurchaseItemFacade extends AbstractFacade<PurchaseItemEntity> {
     public PurchaseItemFacade() {
         super(PurchaseItemEntity.class);
     }
-    
+
     public List<PurchaseItemEntity> findByPurchaseId(int purchaseId) {
         return findMultipleWhere(PurchaseItemEntity_.purchaseid, purchaseId);
     }

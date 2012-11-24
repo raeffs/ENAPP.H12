@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class PurchaseItemMapper {
-    
+
     public PurchaseItemEntity mapDtoToEntity(PurchaseItem source) {
         PurchaseItemEntity destination = new PurchaseItemEntity(0);
         destination.setProductid(source.getProductId());
@@ -19,5 +19,4 @@ public class PurchaseItemMapper {
         destination.setLineamount(source.getLineAmount());
         return destination;
     }
-    
 }

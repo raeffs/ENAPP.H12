@@ -11,12 +11,10 @@ public class AuthenticationHelper {
 
     public static void setAuthenticator(final String domain, final String user, final String password) {
         Authenticator.setDefault(new Authenticator() {
-            
             @Override
             public PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(domain + "\\" + user, password.toCharArray());
             }
-            
         });
     }
 }

@@ -21,12 +21,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 @Stateless
 public class PostfinanceFacade {
-    
+
     private static final String PAYMENT_URL = "https://e-payment.postfinance.ch/ncol/test/orderdirect.asp";
     private static final String OPERATION_CODE = "SAL";
     private static final String CURRENCY_CODE = "CHF";
     private static final String PURCHASE_ID_FORMAT = "TAFLEISC%s";
-    
     @Inject
     private PaymentRequestComposer requestComposer;
 
@@ -46,7 +45,7 @@ public class PostfinanceFacade {
         checkResponse(response);
         return response.getPaymentId();
     }
-    
+
     private PaymentRequest getPaymentRequest(Payment payment) {
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setPurchaseId(String.format(PURCHASE_ID_FORMAT, payment.getPurchaseId()));
@@ -59,20 +58,20 @@ public class PostfinanceFacade {
         paymentRequest.setOperationCode(OPERATION_CODE);
         return paymentRequest;
     }
-    
+
     private void checkResponse(Response response) throws PaymentFailedException {
         if (response.getErrorState() != 0) {
             throw new PaymentFailedException(String.format("Postfinance service reported an error: %s", response.getErrorMessage()));
         }
     }
-    
+
     private void checkHttpState(HttpResponse httpResponse) throws PaymentFailedException {
         int state = httpResponse.getStatusLine().getStatusCode();
         if (state < 200 || state >= 300) {
             throw new PaymentFailedException(String.format("Payment request failed: %s", httpResponse.getStatusLine().getReasonPhrase()));
         }
     }
-    
+
     private Response unmarshalResponse(HttpResponse httpResponse) throws PaymentFailedException {
         try {
             Unmarshaller unmarshaller = JAXBContext.newInstance(Response.class).createUnmarshaller();
@@ -81,5 +80,4 @@ public class PostfinanceFacade {
             throw new PaymentFailedException(String.format("Could not unmarshal response from postfinance service: %s", e.getMessage()));
         }
     }
-
 }

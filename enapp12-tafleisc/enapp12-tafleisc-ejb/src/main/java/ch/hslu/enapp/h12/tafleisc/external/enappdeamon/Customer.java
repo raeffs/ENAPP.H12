@@ -3,24 +3,25 @@ package ch.hslu.enapp.h12.tafleisc.external.enappdeamon;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+
 /**
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Customer {
-    
-    @XmlElement(name="dynNavCustNo")
+
+    @XmlElement(name = "dynNavCustNo")
     private String externalCustomerId;
-    @XmlElement(name="name")
+    @XmlElement(name = "name")
     private String fullName;
-    @XmlElement(name="address")
+    @XmlElement(name = "address")
     private String address;
-    @XmlElement(name="postCode")
+    @XmlElement(name = "postCode")
     private String postCode;
-    @XmlElement(name="city")
+    @XmlElement(name = "city")
     private String city;
-    @XmlElement(name="shopLoginname")
+    @XmlElement(name = "shopLoginname")
     private String username;
 
     public String getExternalCustomerId() {
@@ -70,5 +71,4 @@ public class Customer {
     public void setUsername(String username) {
         this.username = username;
     }
-    
 }

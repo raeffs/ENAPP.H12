@@ -36,20 +36,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 @Stateless
 public class EnappDeamonFacade {
-    
+
     private static final String STATUS_URL = "http://10.29.3.152/ENAPPDaemon-war/resources/salesorder/corr/%s";
-    
     @Resource(mappedName = "jms/EnappQueueFactory")
     private QueueConnectionFactory connectionFactory;
-
     @Resource(mappedName = "jms/enappqueue")
     private Queue queue;
-    
     @Inject
     private CustomerFacade customerFacade;
     @Inject
     private PurchaseItemFacade purchaseItemFacade;
-    
+
     public String sendPurchase(PurchaseEntity purchase) {
         String correlationId = getCorrelationId();
         String content = marshalMessage(getPurchaseMessage(purchase));
@@ -65,13 +62,13 @@ public class EnappDeamonFacade {
         }
         return correlationId;
     }
-    
+
     private String getCorrelationId() {
         return String.valueOf(
-            (new Random().nextInt(8999) + 1000) * 10000000000000l
-            + Calendar.getInstance().getTimeInMillis());
+                (new Random().nextInt(8999) + 1000) * 10000000000000l
+                + Calendar.getInstance().getTimeInMillis());
     }
-    
+
     private PurchaseMessage getPurchaseMessage(PurchaseEntity purchase) {
         PurchaseMessage message = new PurchaseMessage();
         message.setPurchaseId(purchase.getId());
@@ -83,7 +80,7 @@ public class EnappDeamonFacade {
         message.setLines(getLines(purchase.getId()));
         return message;
     }
-    
+
     private Customer getCustomer(int customerId) {
         CustomerEntity entity = customerFacade.findById(customerId);
         Customer customer = new Customer();
@@ -95,7 +92,7 @@ public class EnappDeamonFacade {
         customer.setUsername(entity.getUsername());
         return customer;
     }
-    
+
     private String getDynNavId(String dynNavId) {
         if (dynNavId == null || dynNavId.length() == 0) {
             return "";
@@ -103,7 +100,7 @@ public class EnappDeamonFacade {
             return dynNavId;
         }
     }
-    
+
     private Collection<Line> getLines(int purchaseId) {
         Collection<Line> lines = new ArrayList<Line>();
         for (PurchaseItemEntity entity : purchaseItemFacade.findByPurchaseId(purchaseId)) {
@@ -116,14 +113,14 @@ public class EnappDeamonFacade {
         }
         return lines;
     }
-    
+
     private String marshalMessage(PurchaseMessage message) {
         String textMessage = null;
         try {
             JAXBContext context = JAXBContext.newInstance(PurchaseMessage.class);
-            StringWriter writer = new StringWriter();  
-            Marshaller marshaller = context.createMarshaller();  
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);  
+            StringWriter writer = new StringWriter();
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(message, writer);
             textMessage = writer.toString();
         } catch (Exception e) {
@@ -131,7 +128,7 @@ public class EnappDeamonFacade {
         }
         return textMessage;
     }
-    
+
     public SalesOrder getOrderState(String correlationId) throws Exception {
         HttpGet getRequest = new HttpGet(String.format(STATUS_URL, correlationId));
         HttpClient client = new DefaultHttpClient();
@@ -143,7 +140,7 @@ public class EnappDeamonFacade {
         }
         return unmarshalResponse(httpResponse);
     }
-    
+
     private SalesOrder unmarshalResponse(HttpResponse httpResponse) throws Exception {
         try {
             Unmarshaller unmarshaller = JAXBContext.newInstance(SalesOrder.class).createUnmarshaller();
@@ -152,5 +149,4 @@ public class EnappDeamonFacade {
             throw new Exception(String.format("Could not unmarshal response from enapp deamon service: %s", e.getMessage()));
         }
     }
-
 }

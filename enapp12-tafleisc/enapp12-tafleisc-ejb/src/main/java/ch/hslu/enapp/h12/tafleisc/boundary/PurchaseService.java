@@ -44,7 +44,6 @@ public class PurchaseService implements IPurchaseService {
     private PurchaseItemMapper purchaseItemMapper;
     @Inject
     private PurchaseProcessor purchaseProcessor;
-    
     private Collection<PurchaseItem> basketItems;
 
     public PurchaseService() {
@@ -121,7 +120,7 @@ public class PurchaseService implements IPurchaseService {
         basketItems.clear();
         return null;
     }
-    
+
     private PurchaseEntity createPurchase(int customerId) {
         PurchaseEntity purchase = new PurchaseEntity(0);
         purchase.setCustomerid(customerId);
@@ -131,13 +130,13 @@ public class PurchaseService implements IPurchaseService {
         purchaseFacade.create(purchase);
         return purchase;
     }
-    
+
     private void savePurchase(PurchaseEntity purchase, int paymentId) {
         purchase.setPaymentid(paymentId);
         purchase.setStatus(PurchaseStatus.Payed.getIndex());
         purchaseFacade.edit(purchase);
     }
-    
+
     private long getTotalAmount() {
         long amount = 0;
         for (PurchaseItem item : basketItems) {
@@ -145,7 +144,7 @@ public class PurchaseService implements IPurchaseService {
         }
         return amount;
     }
-    
+
     private void saveBasketItems(int purchaseId) {
         for (PurchaseItem item : basketItems) {
             PurchaseItemEntity entity = purchaseItemMapper.mapDtoToEntity(item);
@@ -153,5 +152,4 @@ public class PurchaseService implements IPurchaseService {
             purchaseItemFacade.create(entity);
         }
     }
-    
 }
