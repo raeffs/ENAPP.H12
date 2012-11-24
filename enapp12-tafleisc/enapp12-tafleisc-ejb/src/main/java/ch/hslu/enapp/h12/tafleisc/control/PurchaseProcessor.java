@@ -1,7 +1,9 @@
 package ch.hslu.enapp.h12.tafleisc.control;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseStatus;
+import ch.hslu.enapp.h12.tafleisc.entity.CustomerEntity;
 import ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity;
+import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.SalesOrder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -35,6 +37,8 @@ public class PurchaseProcessor implements MessageListener {
     private EnappDeamonFacade enappDeamonFacade;
     @Inject
     private PurchaseFacade purchaseFacade;
+    @Inject
+    private CustomerFacade customerFacade;
     
     @Override
     public void onMessage(Message message) {
@@ -58,5 +62,31 @@ public class PurchaseProcessor implements MessageListener {
     @Timeout
     public void purchaseCheck(Timer timer) {
         int purchaseId = Integer.parseInt(timer.getInfo().toString());
+        PurchaseEntity purchase = purchaseFacade.findById(purchaseId);
+        SalesOrder order = null;
+        try {
+            order = enappDeamonFacade.getOrderState(purchase.getCorrelationid());
+        } catch (Exception e) {
+            Logger.getLogger(PurchaseProcessor.class.getName()).log(Level.INFO, e.getMessage());
+        }
+        if (order == null || order.hasFailed()) {
+            purchase.setStatus(PurchaseStatus.Failed.getIndex());
+        } else if (order.isProcessing()) {
+            schedulePurchaseCheck(purchaseId);
+        } else if (order.isOk()) {
+            if (order.wasCustomerCreated()) {
+                assignExternalCustomerId(purchase.getCustomerid(), order.getExternalCustomerId());
+            }
+            purchase.setStatus(PurchaseStatus.Acepted.getIndex());
+        } else {
+            purchase.setStatus(PurchaseStatus.Failed.getIndex());
+        }
+        purchaseFacade.edit(purchase);
+    }
+    
+    private void assignExternalCustomerId(int customerId, String externalId) {
+        CustomerEntity customer = customerFacade.findById(customerId);
+        customer.setDynnavid(externalId);
+        customerFacade.edit(customer);
     }
 }

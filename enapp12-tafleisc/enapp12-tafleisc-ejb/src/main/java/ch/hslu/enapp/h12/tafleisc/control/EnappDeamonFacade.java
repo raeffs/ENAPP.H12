@@ -6,6 +6,7 @@ import ch.hslu.enapp.h12.tafleisc.entity.PurchaseItemEntity;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.Customer;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.Line;
 import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.PurchaseMessage;
+import ch.hslu.enapp.h12.tafleisc.external.enappdeamon.SalesOrder;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,11 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  *
@@ -30,6 +36,8 @@ import javax.xml.bind.Marshaller;
  */
 @Stateless
 public class EnappDeamonFacade {
+    
+    private static final String STATUS_URL = "http://10.29.3.152/ENAPPDaemon-war/resources/salesorder/corr/%s";
     
     @Resource(mappedName = "jms/EnappQueueFactory")
     private QueueConnectionFactory connectionFactory;
@@ -122,6 +130,27 @@ public class EnappDeamonFacade {
             Logger.getLogger(EnappDeamonFacade.class.getName()).log(Level.INFO, e.getMessage());
         }
         return textMessage;
+    }
+    
+    public SalesOrder getOrderState(String correlationId) throws Exception {
+        HttpGet getRequest = new HttpGet(String.format(STATUS_URL, correlationId));
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse httpResponse = null;
+        try {
+            httpResponse = client.execute(getRequest);
+        } catch (Exception e) {
+            throw new Exception(String.format("Status request failed: %s", e.getMessage()));
+        }
+        return unmarshalResponse(httpResponse);
+    }
+    
+    private SalesOrder unmarshalResponse(HttpResponse httpResponse) throws Exception {
+        try {
+            Unmarshaller unmarshaller = JAXBContext.newInstance(SalesOrder.class).createUnmarshaller();
+            return (SalesOrder) unmarshaller.unmarshal(httpResponse.getEntity().getContent());
+        } catch (Exception e) {
+            throw new Exception(String.format("Could not unmarshal response from enapp deamon service: %s", e.getMessage()));
+        }
     }
 
 }
