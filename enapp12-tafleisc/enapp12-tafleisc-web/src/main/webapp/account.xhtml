@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="./resources/templates/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="navigationLinkAccountClass" value="is-selected" />
+    <ui:define name="content">
+        <h:form id="accountform">
+            <div class="csstable" id="accounttable">
+                <div class="csstable-row csstable-header">
+                    <div class="csstable-cell cell-aligncenter">
+                        Account information
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-alignleft">
+                        <h:messages class="validation" />
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Username:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${account.username}" tabindex="1" disabled="true" />
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Name:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${account.name}" tabindex="2" />
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Address:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${account.address}" tabindex="3" />
+                    </div>
+                </div>
+                <div class="csstable-row">
+                    <div class="csstable-cell cell-left cell-alignleft">
+                        Email:
+                    </div>
+                    <div class="csstable-cell cell-right cell-aligncenter">
+                        <h:inputText value="${account.email}" tabindex="4" disabled="true" />
+                    </div>
+                </div>
+                <div class="csstable-row csstable-footer">
+                    <div class="csstable-cell cell-aligncenter">
+                        <h:commandButton value="Save" action="${account.save()}" />
+                        <h:commandButton value="Reset" action="${account.reset()}" />
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

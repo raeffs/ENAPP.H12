@@ -189,12 +189,14 @@ input {
 }
 
 #logintable,
-#checkouttable {
+#checkouttable,
+#accounttable {
     width: 450px;
 }
 
 #logintable .cell-left,
-#checkouttable .cell-left {
+#checkouttable .cell-left,
+#accounttable .cell-left {
     padding-top: 16px;
 }
 
