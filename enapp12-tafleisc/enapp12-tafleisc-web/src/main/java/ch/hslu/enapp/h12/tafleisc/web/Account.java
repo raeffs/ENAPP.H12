@@ -27,6 +27,7 @@ public class Account implements Serializable {
     private String name;
     private String address;
     private String email;
+    private String password;
 
     public String getUsername() {
         return username;
@@ -59,12 +60,22 @@ public class Account implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     
     @PostConstruct
     public void init() {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-        customerId = customerService.getCustomerId(principal.getName());
-        reset();
+        if (principal != null) {
+            customerId = customerService.getCustomerId(principal.getName());
+            reset();
+        }
     }
     
     public void reset() {
@@ -73,6 +84,7 @@ public class Account implements Serializable {
         setName(customer.getName());
         setAddress(customer.getAddress());
         setEmail(customer.getEmail());
+        setPassword("");
     }
     
     public void save() {
@@ -83,4 +95,13 @@ public class Account implements Serializable {
         reset();
     }
     
+    public void register() throws Exception {
+        customerService.createCustomer(
+                getUsername(),
+                getPassword(),
+                getName(),
+                getAddress(),
+                getEmail());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("./account.xhtml");
+    }
 }

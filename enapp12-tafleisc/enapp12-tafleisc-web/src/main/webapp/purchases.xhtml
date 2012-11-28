@@ -26,7 +26,7 @@
                 <div class="csstable-cell cell-100 cell-right cell-aligncenter">
                     Amount
                 </div>
-                <div class="csstable-cell cell-alignleft">
+                <div class="csstable-cell cell-aligncenter">
                     Timestamp
                 </div>
             </div>
@@ -50,9 +50,9 @@
                                              maxFractionDigits="2" minFractionDigits="2" />
                         </h:outputText>
                     </div>
-                    <div class="csstable-cell cell-alignleft">
+                    <div class="csstable-cell cell-aligncenter">
                         <h:outputText value="${purchase.datetime}">
-                            <f:convertDateTime dateStyle="medium" />
+                            <f:convertDateTime dateStyle="medium" type="both" />
                         </h:outputText>
                     </div>
                 </div>

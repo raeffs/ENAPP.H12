@@ -51,4 +51,17 @@ public class CustomerService implements ICustomerService {
         customerMapper.mapDtoToEntity(customer, entity);
         customerFacade.edit(entity);
     }
+
+    @Override
+    public void createCustomer(String username, String password, String name, String address, String email) {
+        CustomerEntity entity = new CustomerEntity(0);
+        entity.setUsername(username);
+        entity.setPassword(password);
+        entity.setName(name);
+        entity.setAddress(address);
+        entity.setEmail(email);
+        entity.setGroupid(1);
+        customerFacade.create(entity);
+    }
+
 }

@@ -174,17 +174,20 @@ input {
 }
 
 #producttable .csstable-row:hover,
-#baskettable .csstable-row:hover {
+#baskettable .csstable-row:hover,
+#purchasetable .csstable-row:hover {
     background-color: #FFdd66;
 }
 
 #producttable .csstable-header:hover,
-#baskettable .csstable-header:hover {
+#baskettable .csstable-header:hover,
+#purchasetable .csstable-header:hover {
     background-color: #333;
 }
 
 #producttable .csstable-footer:hover,
-#baskettable .csstable-footer:hover {
+#baskettable .csstable-footer:hover,
+#purchasetable .csstable-footer:hover {
     background-color: inherit;
 }
 

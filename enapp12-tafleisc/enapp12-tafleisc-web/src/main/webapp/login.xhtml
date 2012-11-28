@@ -5,7 +5,6 @@
                 template="./resources/templates/template.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:param name="navigationLinkLoginClass" value="is-selected" />
     <ui:define name="content">
         <form id="loginform" method="POST" action="j_security_check">
             <div class="csstable" id="logintable">
@@ -37,6 +36,9 @@
                 </div>
             </div>
         </form>
+        <h:outputLink value="register.xhtml">
+            <h:outputText value="Or register a new account..." />
+        </h:outputLink>
     </ui:define>
 
 </ui:composition>
