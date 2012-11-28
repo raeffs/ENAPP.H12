@@ -11,6 +11,7 @@ public enum PurchaseStatus {
     Submitted(2),
     Acepted(3),
     Failed(9);
+    
     private final int index;
 
     private PurchaseStatus(int index) {
@@ -19,5 +20,21 @@ public enum PurchaseStatus {
 
     public int getIndex() {
         return index;
+    }
+    
+    public static PurchaseStatus fromIndex(int index) {
+        switch (index) {
+            case 0:
+                return Created;
+            case 1:
+                return Payed;
+            case 2:
+                return Submitted;
+            case 3:
+                return Acepted;
+            case 9:
+            default:
+                return Failed;
+        }
     }
 }

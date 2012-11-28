@@ -2,6 +2,7 @@ package ch.hslu.enapp.h12.tafleisc.control;
 
 import ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity;
 import ch.hslu.enapp.h12.tafleisc.entity.PurchaseEntity_;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +28,9 @@ public class PurchaseFacade extends AbstractFacade<PurchaseEntity> {
 
     public PurchaseEntity findById(int purchaseId) {
         return findSingleWhere(PurchaseEntity_.id, purchaseId);
+    }
+    
+    public List<PurchaseEntity> findByCustomerId(int customerId) {
+        return findMultipleWhere(PurchaseEntity_.customerid, customerId);
     }
 }

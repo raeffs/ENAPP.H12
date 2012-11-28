@@ -1,6 +1,7 @@
 package ch.hslu.enapp.h12.tafleisc.boundary;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
@@ -20,4 +21,6 @@ public interface IPurchaseService {
 
     Payment checkout(Payment purchase)
             throws PaymentFailedException;
+    
+    Collection<Purchase> getCustomerPurchases(int customerId);
 }

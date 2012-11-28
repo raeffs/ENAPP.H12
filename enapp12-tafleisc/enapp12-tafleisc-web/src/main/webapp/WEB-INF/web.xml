@@ -34,10 +34,13 @@
             <url-pattern>/basket.xhtml</url-pattern>
             <url-pattern>/faces/account.xhtml</url-pattern>
             <url-pattern>/account.xhtml</url-pattern>
+            <url-pattern>/faces/purchases.xhtml</url-pattern>
+            <url-pattern>/purchases.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>userRole</role-name>
+            <role-name>adminRole</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>

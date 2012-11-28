@@ -2,6 +2,7 @@ package ch.hslu.enapp.h12.tafleisc.boundary;
 
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Payment;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.Product;
+import ch.hslu.enapp.h12.tafleisc.boundary.dto.Purchase;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseItem;
 import ch.hslu.enapp.h12.tafleisc.boundary.dto.PurchaseStatus;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidProductException;
@@ -9,6 +10,7 @@ import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.InvalidQuantityException;
 import ch.hslu.enapp.h12.tafleisc.boundary.exceptions.PaymentFailedException;
 import ch.hslu.enapp.h12.tafleisc.boundary.mapping.ProductMapper;
 import ch.hslu.enapp.h12.tafleisc.boundary.mapping.PurchaseItemMapper;
+import ch.hslu.enapp.h12.tafleisc.boundary.mapping.PurchaseMapper;
 import ch.hslu.enapp.h12.tafleisc.control.DynNavFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PostfinanceFacade;
 import ch.hslu.enapp.h12.tafleisc.control.PurchaseFacade;
@@ -40,6 +42,8 @@ public class PurchaseService implements IPurchaseService {
     private PurchaseItemFacade purchaseItemFacade;
     @Inject
     private ProductMapper productMapper;
+    @Inject
+    private PurchaseMapper purchaseMapper;
     @Inject
     private PurchaseItemMapper purchaseItemMapper;
     @Inject
@@ -151,5 +155,14 @@ public class PurchaseService implements IPurchaseService {
             entity.setPurchaseid(purchaseId);
             purchaseItemFacade.create(entity);
         }
+    }
+
+    @Override
+    public Collection<Purchase> getCustomerPurchases(int customerId) {
+        Collection<Purchase> purchases = new ArrayList<Purchase>();
+        for (PurchaseEntity entity : purchaseFacade.findByCustomerId(customerId)) {
+            purchases.add(purchaseMapper.mapEntityToDto(entity));
+        }
+        return purchases;
     }
 }

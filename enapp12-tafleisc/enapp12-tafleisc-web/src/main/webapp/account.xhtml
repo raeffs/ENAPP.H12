@@ -4,7 +4,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="./resources/templates/template.xhtml"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:param name="navigationLinkAccountClass" value="is-selected" />
     <ui:define name="content">
@@ -55,6 +56,7 @@
                 <div class="csstable-row csstable-footer">
                     <div class="csstable-cell cell-aligncenter">
                         <h:commandButton value="Save" action="${account.save()}" />
+                        &nbsp;
                         <h:commandButton value="Reset" action="${account.reset()}" />
                     </div>
                 </div>
