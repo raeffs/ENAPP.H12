@@ -6,8 +6,8 @@ import java.util.Date;
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
-public class Purchase {
-    
+public class Purchase implements Comparable<Purchase> {
+
     private int purchaseId;
     private int customerId;
     private Date datetime;
@@ -70,5 +70,15 @@ public class Purchase {
 
     public void setCorrelationId(String correlationId) {
         this.correlationId = correlationId;
+    }
+
+    public int compareTo(Purchase o) {
+        if (o.getPurchaseId() == getPurchaseId()) {
+            return 0;
+        } else if (o.getPurchaseId() > getPurchaseId()) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

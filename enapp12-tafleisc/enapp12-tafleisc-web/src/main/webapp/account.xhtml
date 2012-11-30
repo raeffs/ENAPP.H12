@@ -34,7 +34,9 @@
                         Name:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputText value="${account.name}" tabindex="2" />
+                        <h:inputText value="${account.name}" tabindex="2">
+                            <f:validateRegex pattern="[\w ]{5,45}" />
+                        </h:inputText>
                     </div>
                 </div>
                 <div class="csstable-row">
@@ -42,7 +44,9 @@
                         Address:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputText value="${account.address}" tabindex="3" />
+                        <h:inputText value="${account.address}" tabindex="3">
+                            <f:validateRegex pattern="[\w ]{5,45}" />
+                        </h:inputText>
                     </div>
                 </div>
                 <div class="csstable-row">

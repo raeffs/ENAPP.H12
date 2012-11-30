@@ -3,7 +3,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./resources/templates/template.xhtml"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
         <h:form id="loginform">
@@ -14,11 +15,18 @@
                     </div>
                 </div>
                 <div class="csstable-row">
+                    <div class="csstable-cell cell-alignleft">
+                        <h:messages class="validation" />
+                    </div>
+                </div>
+                <div class="csstable-row">
                     <div class="csstable-cell cell-left cell-alignleft">
                         Username:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputText value="${account.username}" tabindex="1" />
+                        <h:inputText value="${account.username}" tabindex="1">
+                            <f:validateRegex pattern="\w{3,15}" />
+                        </h:inputText>
                     </div>
                 </div>
                 <div class="csstable-row">
@@ -26,7 +34,9 @@
                         Password:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputSecret value="${account.password}" tabindex="2"/>
+                        <h:inputSecret value="${account.password}" tabindex="2">
+                            <f:validateRegex pattern=".{5,32}" />
+                        </h:inputSecret>
                     </div>
                 </div>
                 <div class="csstable-row">
@@ -34,7 +44,9 @@
                         Name:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputText value="${account.name}" tabindex="2" />
+                        <h:inputText value="${account.name}" tabindex="2">
+                            <f:validateRegex pattern="[\w ]{5,45}" />
+                        </h:inputText>
                     </div>
                 </div>
                 <div class="csstable-row">
@@ -42,7 +54,9 @@
                         Address:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputText value="${account.address}" tabindex="3" />
+                        <h:inputText value="${account.address}" tabindex="3">
+                            <f:validateRegex pattern="[\w ]{5,45}" />
+                        </h:inputText>
                     </div>
                 </div>
                 <div class="csstable-row">
@@ -50,7 +64,9 @@
                         Email:
                     </div>
                     <div class="csstable-cell cell-right cell-aligncenter">
-                        <h:inputText value="${account.email}" tabindex="4" />
+                        <h:inputText value="${account.email}" tabindex="4">
+                            <f:validateRegex pattern="[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+" />
+                        </h:inputText>
                     </div>
                 </div>
                 <div class="csstable-row csstable-footer">

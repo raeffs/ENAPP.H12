@@ -63,5 +63,4 @@ public class CustomerService implements ICustomerService {
         entity.setGroupid(1);
         customerFacade.create(entity);
     }
-
 }

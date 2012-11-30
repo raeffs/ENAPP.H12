@@ -29,7 +29,7 @@ public class PurchaseFacade extends AbstractFacade<PurchaseEntity> {
     public PurchaseEntity findById(int purchaseId) {
         return findSingleWhere(PurchaseEntity_.id, purchaseId);
     }
-    
+
     public List<PurchaseEntity> findByCustomerId(int customerId) {
         return findMultipleWhere(PurchaseEntity_.customerid, customerId);
     }

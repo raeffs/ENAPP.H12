@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class PurchaseMapper {
-    
+
     public Purchase mapEntityToDto(PurchaseEntity source) {
         Purchase destination = new Purchase();
         destination.setPurchaseId(source.getId());
@@ -23,5 +23,4 @@ public class PurchaseMapper {
         destination.setStatus(PurchaseStatus.fromIndex(source.getStatus()));
         return destination;
     }
-    
 }

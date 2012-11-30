@@ -6,12 +6,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Raphael Fleischlin <raphael.fleischlin@stud.hslu.ch>
  */
-@ManagedBean (name = "authentication")
+@ManagedBean(name = "authentication")
 @ViewScoped
 public class Authentication {
 
@@ -33,7 +34,14 @@ public class Authentication {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    public Authentication() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+    }
+
     public void login() throws Exception {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         try {
@@ -43,9 +51,12 @@ public class Authentication {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error occured!", e.getMessage()));
         }
     }
-    
-    public void logout() {
-        
+
+    public void logout() throws Exception {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        FacesContext.getCurrentInstance().getExternalContext().redirect("./login.xhtml");
     }
-    
 }

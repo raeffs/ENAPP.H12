@@ -21,6 +21,6 @@ public interface IPurchaseService {
 
     Payment checkout(Payment purchase)
             throws PaymentFailedException;
-    
+
     Collection<Purchase> getCustomerPurchases(int customerId);
 }

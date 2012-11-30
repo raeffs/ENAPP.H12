@@ -19,6 +19,6 @@ public interface ICustomerService {
     Customer getCustomer(int customerId);
 
     void updateCustomer(Customer customer);
-    
+
     void createCustomer(String username, String password, String name, String address, String email);
 }

@@ -76,7 +76,7 @@ public class PurchaseProcessor {
             if (order.wasCustomerCreated()) {
                 assignExternalCustomerId(purchase.getCustomerid(), order.getExternalCustomerId());
             }
-            purchase.setStatus(PurchaseStatus.Acepted.getIndex());
+            purchase.setStatus(PurchaseStatus.Accepted.getIndex());
         } else {
             purchase.setStatus(PurchaseStatus.Failed.getIndex());
         }

@@ -17,12 +17,10 @@ import javax.inject.Inject;
 @ManagedBean(name = "account")
 @ViewScoped
 public class Account implements Serializable {
-    
+
     @Inject
     private ICustomerService customerService;
-    
     private int customerId;
-    
     private String username;
     private String name;
     private String address;
@@ -68,7 +66,7 @@ public class Account implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     @PostConstruct
     public void init() {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
@@ -77,7 +75,7 @@ public class Account implements Serializable {
             reset();
         }
     }
-    
+
     public void reset() {
         Customer customer = customerService.getCustomer(customerId);
         setUsername(customer.getUsername());
@@ -86,7 +84,7 @@ public class Account implements Serializable {
         setEmail(customer.getEmail());
         setPassword("");
     }
-    
+
     public void save() {
         Customer customer = customerService.getCustomer(customerId);
         customer.setName(getName());
@@ -94,7 +92,7 @@ public class Account implements Serializable {
         customerService.updateCustomer(customer);
         reset();
     }
-    
+
     public void register() throws Exception {
         customerService.createCustomer(
                 getUsername(),
